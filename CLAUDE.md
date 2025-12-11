@@ -38,17 +38,17 @@ js-fileexplorer expects a backend, but we override its callbacks to use static d
 
 ```javascript
 const explorer = new FileExplorer(container, {
-    onrefresh: async (folder, required) => {
-        // Load pre-generated JSON instead of AJAX
-        const jsonFile = `data/${pathToJson(folder.GetPath())}`;
-        const data = await fetch(jsonFile).then(r => r.json());
-        folder.SetEntries(data.entries);
-    },
+  onrefresh: async (folder, required) => {
+    // Load pre-generated JSON instead of AJAX
+    const jsonFile = `data/${pathToJson(folder.GetPath())}`;
+    const data = await fetch(jsonFile).then(r => r.json());
+    folder.SetEntries(data.entries);
+  },
 
-    onopenfile: (folder, entry) => {
-        // Show inline detail view
-        showFileDetail(entry.id);
-    }
+  onopenfile: (folder, entry) => {
+    // Show inline detail view
+    showFileDetail(entry.id);
+  },
 });
 ```
 
@@ -64,6 +64,7 @@ A unique feature: `file.ext.md` files are automatically paired with `file.ext`:
 - Build script detects pairing during two-pass directory traversal
 
 This requires careful handling in `build/generate.js`:
+
 1. First pass: identify all `.md` files and check if base file exists
 2. Second pass: process files, skip paired `.md`, embed description in base file's JSON
 
@@ -72,6 +73,7 @@ This requires careful handling in `build/generate.js`:
 See [PRD.md - Technical Specifications](./PRD.md#technical-specifications) for complete JSON format specifications.
 
 **Key Points:**
+
 - Directory JSON: Contains `entries` array with file/folder metadata
 - File Detail JSON: Full metadata, URLs, thumbnails, and paired markdown
 - IDs use format: `{path}-{filename}` (e.g., `images-logo.png`)
@@ -100,6 +102,7 @@ build/
 See [README.md - Build Process](./README.md#build-process) for commands.
 
 **Quick Test Cycle:**
+
 1. Modify code in `build/generate.js` or `src/`
 2. `npm run build` - rebuild
 3. `npm start` - serve locally
@@ -108,6 +111,7 @@ See [README.md - Build Process](./README.md#build-process) for commands.
 ## Supported File Types
 
 **Current (v1)**:
+
 - Images: PNG, JPEG, GIF, SVG, WebP
 - Text: Markdown (.md)
 
@@ -116,6 +120,7 @@ See [README.md - Build Process](./README.md#build-process) for commands.
 ## Key Dependencies
 
 When implementing:
+
 - **sharp**: Image thumbnail generation and metadata extraction
 - **marked**: Markdown parsing to HTML
 - **highlight.js**: Syntax highlighting for code blocks in markdown
@@ -137,25 +142,30 @@ User stories are prefixed with "US-" (e.g., `US-1: Browse Directory Structure`).
 ## Design Philosophy: Ultrathink
 
 This project follows the **ultrathink** philosophy:
+
 - **Think Different**: Question assumptions (e.g., "Why does file browsing need a backend?")
 - **Obsess Over Details**: Every interaction should feel natural and instant
 - **Simplify Ruthlessly**: Minimum viable architecture, maximum functionality
 - **Craft, Don't Code**: Function names, abstractions, and UX should "sing"
 
 **When implementing features:**
+
 1. Check [PRD.md - User Stories](./PRD.md#user-stories) for acceptance criteria
 2. Understand the constraint: **zero backend, everything is static**
 3. Design for elegance: if it feels complicated, there's a simpler way
 4. Test the full user flow: build → deploy → browse
 
 ### Coding Standards
+
 Always include a JSDoc comment for any module export. JSDoc comments should include:
+
 - At least 1 full sentence explaining the motivation and use case. Maybe more if the complexity justifies it.
 - Information about the parameters using @param
 - Information about return value using @returns
 - TypeScript types
 
 Optimize for reading and debugging first. Premature optimization is the root of all evil!
+
 - Use invariant to assert assumptions
 - Favor Result monad over null or undefined return values
 - Add comments that explain thinking behind tricky, complex or counter intuitive code, but do not over do it!
@@ -180,6 +190,7 @@ Optimize for reading and debugging first. Premature optimization is the root of 
 ### Debugging Build Issues
 
 Build script is synchronous and logs to console. If JSON is malformed:
+
 - Check two-pass logic for markdown pairing
 - Verify file path → ID conversion is consistent
 - Ensure metadata extraction doesn't throw on edge cases
@@ -187,6 +198,7 @@ Build script is synchronous and logs to console. If JSON is malformed:
 ### Debugging Runtime Issues
 
 Browser shows errors for:
+
 - Missing JSON files → Check build output
 - Hash routing not working → Verify `hashchange` event listener
 - FileExplorer not loading → Check console for callback errors

@@ -1,0 +1,25 @@
+{
+  "name": "recycle",
+  "version": "1.0.0",
+  "description": "A beautiful, zero-backend file browser built as a static site. Browse directories, view images, and read markdown documentation with a seamless, app-like experience—all without a server.",
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.7.4"
+  }
+}

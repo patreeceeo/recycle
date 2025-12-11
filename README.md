@@ -77,6 +77,7 @@ See [CLAUDE.md - Directory Structure](./CLAUDE.md#directory-structure) and [PRD.
 ### Adding Content
 
 1. **Add files to `content/` directory**:
+
    ```bash
    cp my-image.png content/images/
    cp my-doc.md content/docs/
@@ -84,6 +85,7 @@ See [CLAUDE.md - Directory Structure](./CLAUDE.md#directory-structure) and [PRD.
 
 2. **Add descriptions (optional)**:
    Create a `.md` file with the same name as any file to add a description:
+
    ```bash
    # This will be shown alongside my-image.png
    echo "# My Image\n\nThis is a beautiful image..." > content/images/my-image.png.md
@@ -97,6 +99,7 @@ See [CLAUDE.md - Directory Structure](./CLAUDE.md#directory-structure) and [PRD.
 ### Markdown Pairing
 
 Create a `.md` file with the same name as any file to add a description:
+
 ```bash
 echo "# My Image\n\nDescription..." > content/images/photo.png.md
 ```
@@ -170,6 +173,7 @@ rsync -av public/ user@yourserver.com:/var/www/html/
 For architecture details, implementation patterns, and coding standards, see [CLAUDE.md](./CLAUDE.md).
 
 **Quick Reference:**
+
 - Architecture: [CLAUDE.md - Architecture](./CLAUDE.md#architecture)
 - Design Patterns: [CLAUDE.md - Critical Design Pattern](./CLAUDE.md#critical-design-pattern-overriding-js-fileexplorer)
 - Adding Features: [CLAUDE.md - Common Patterns](./CLAUDE.md#common-patterns)
@@ -204,6 +208,7 @@ This project follows the **ultrathink** philosophy: question assumptions, obsess
 ## Roadmap
 
 ### v1.0 (Current)
+
 - ✅ Directory browsing
 - ✅ Image viewing
 - ✅ Markdown rendering
@@ -211,6 +216,7 @@ This project follows the **ultrathink** philosophy: question assumptions, obsess
 - ✅ Responsive design
 
 ### Future Enhancements
+
 - [ ] Client-side search
 - [ ] Filter by file type
 - [ ] Sort options (name, size, date)

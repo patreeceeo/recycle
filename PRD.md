@@ -30,6 +30,7 @@ Create an elegant, zero-backend file browsing experience that feels dynamic and 
 For detailed architecture and implementation patterns, see [CLAUDE.md - Architecture](./CLAUDE.md#architecture).
 
 **High-level overview:**
+
 - **Library**: js-fileexplorer (adapted for static use)
 - **Build Time**: Node.js generates all JSON data
 - **Runtime**: Single-page app with hash routing
@@ -38,11 +39,13 @@ For detailed architecture and implementation patterns, see [CLAUDE.md - Architec
 ## User Stories
 
 ### US-1: Browse Directory Structure
+
 **As a** user
 **I want to** see a list of files and folders in a directory
 **So that** I can understand the content organization
 
 **Acceptance Criteria:**
+
 - Directory view shows all files and subdirectories
 - Files and folders are visually distinct (icons, styling)
 - File entries show: name, type icon, file size
@@ -50,11 +53,13 @@ For detailed architecture and implementation patterns, see [CLAUDE.md - Architec
 - Entries are sorted (folders first, then alphabetically)
 
 ### US-2: Navigate Between Directories
+
 **As a** user
 **I want to** click on a folder to view its contents
 **So that** I can explore nested directory structures
 
 **Acceptance Criteria:**
+
 - Clicking a folder navigates to that folder's view
 - Browser URL updates with hash (e.g., `#/images/logos`)
 - Browser back/forward buttons work correctly
@@ -62,11 +67,13 @@ For detailed architecture and implementation patterns, see [CLAUDE.md - Architec
 - Navigation is instant (no loading delays)
 
 ### US-3: View Image Files
+
 **As a** user
 **I want to** click on an image file to see it displayed
 **So that** I can view the image content
 
 **Acceptance Criteria:**
+
 - Clicking an image file opens detail view
 - Image is displayed at appropriate size (max-width: 100%)
 - Detail view shows: filename, dimensions, file size, modified date
@@ -74,11 +81,13 @@ For detailed architecture and implementation patterns, see [CLAUDE.md - Architec
 - Supports: PNG, JPEG, GIF, SVG, WebP
 
 ### US-4: View Markdown Files
+
 **As a** user
 **I want to** click on a markdown file to see it rendered as HTML
 **So that** I can read documentation and text content
 
 **Acceptance Criteria:**
+
 - Clicking a .md file opens detail view
 - Markdown is rendered as formatted HTML
 - Detail view shows: filename, file size, modified date
@@ -87,11 +96,13 @@ For detailed architecture and implementation patterns, see [CLAUDE.md - Architec
 - Links in markdown are functional
 
 ### US-5: View Image with Markdown Description
+
 **As a** user
 **I want to** see a markdown description alongside an image
 **So that** I can understand the context and details of the image
 
 **Acceptance Criteria:**
+
 - If `file.ext` has a paired `file.ext.md`, the markdown is shown
 - Image displays at top of detail view
 - Markdown description renders below the image
@@ -99,11 +110,13 @@ For detailed architecture and implementation patterns, see [CLAUDE.md - Architec
 - Works for all supported image formats
 
 ### US-6: Inline Detail View
+
 **As a** user
 **I want to** see file details without leaving the page
 **So that** I have a seamless browsing experience
 
 **Acceptance Criteria:**
+
 - Clicking a file toggles from browser to detail view
 - Detail view and browser view are part of same page
 - Transition is smooth (CSS animations)
@@ -111,11 +124,13 @@ For detailed architecture and implementation patterns, see [CLAUDE.md - Architec
 - Browser back button returns to directory view
 
 ### US-7: Responsive Mobile Experience
+
 **As a** mobile user
 **I want to** browse files on my phone or tablet
 **So that** I can access content from any device
 
 **Acceptance Criteria:**
+
 - Layout adapts to mobile screen sizes
 - Touch interactions work smoothly
 - Text is readable without zooming
@@ -123,11 +138,13 @@ For detailed architecture and implementation patterns, see [CLAUDE.md - Architec
 - Navigation is thumb-friendly
 
 ### US-8: Build and Deploy
+
 **As a** content maintainer
 **I want to** run a build script to generate the static site
 **So that** I can deploy updated content
 
 **Acceptance Criteria:**
+
 - Single command generates all necessary files
 - Build script processes `content/` directory
 - Generates JSON for each directory
@@ -140,6 +157,7 @@ For detailed architecture and implementation patterns, see [CLAUDE.md - Architec
 ## User Flows
 
 ### Flow 1: Browse to Image with Description
+
 1. User lands on home page showing root directory
 2. User clicks "images" folder
 3. Browser shows contents of images folder
@@ -152,6 +170,7 @@ For detailed architecture and implementation patterns, see [CLAUDE.md - Architec
 7. Returns to images folder view
 
 ### Flow 2: Read Markdown Documentation
+
 1. User clicks "docs" folder
 2. Browser shows docs folder contents
 3. User clicks "README.md"
@@ -165,6 +184,7 @@ For detailed architecture and implementation patterns, see [CLAUDE.md - Architec
 ## Technical Specifications
 
 ### Directory JSON Format
+
 ```json
 {
   "path": "/images",
@@ -184,6 +204,7 @@ For detailed architecture and implementation patterns, see [CLAUDE.md - Architec
 ```
 
 ### File Detail JSON Format (Image with Description)
+
 ```json
 {
   "id": "images-logo.png",
@@ -207,6 +228,7 @@ For detailed architecture and implementation patterns, see [CLAUDE.md - Architec
 ```
 
 ### File Detail JSON Format (Standalone Markdown)
+
 ```json
 {
   "id": "docs-README.md",
