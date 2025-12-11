@@ -174,6 +174,8 @@ For architecture details, implementation patterns, and coding standards, see [CL
 - Design Patterns: [CLAUDE.md - Critical Design Pattern](./CLAUDE.md#critical-design-pattern-overriding-js-fileexplorer)
 - Adding Features: [CLAUDE.md - Common Patterns](./CLAUDE.md#common-patterns)
 
+Keep each document focused and use hyperlinks between documents to avoid duplicating information.
+
 ## Issue Tracking
 
 This project uses [beads](https://github.com/patrickjm/beads) for issue tracking:
