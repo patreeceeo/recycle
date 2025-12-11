@@ -4,6 +4,8 @@ A beautiful, zero-backend file browser built as a static site. Browse directorie
 
 I use it to display stuff that I want to give away, whether physical stuff sitting around my place or ideas that I want to see someone execute.
 
+> **📖 Documentation:** [PRD.md](./PRD.md) for product vision and requirements | [CLAUDE.md](./CLAUDE.md) for technical architecture
+
 ## Overview
 
 Recycle transforms your content directory into an elegant, interactive file browser that can be deployed anywhere static files can be hosted. Built with [js-fileexplorer](https://github.com/cubiclesoft/js-fileexplorer), it provides a rich file browsing experience while remaining completely static.
@@ -68,42 +70,7 @@ Visit `http://localhost:8000` to browse your content.
 
 ## Project Structure
 
-```
-recycle/
-├── content/              # Your source files (images, markdown, etc.)
-│   ├── images/
-│   │   ├── logo.png
-│   │   └── logo.png.md   # Description for logo.png
-│   └── docs/
-│       └── README.md
-│
-├── data/                 # Generated JSON (created by build script)
-│   ├── root.json
-│   ├── images.json
-│   └── files/
-│       ├── logo.png.json
-│       └── README.md.json
-│
-├── public/               # Deployable static files
-│   ├── content/          # Original files (copied from content/)
-│   └── thumbnails/       # Generated thumbnails
-│
-├── src/                  # Source code
-│   ├── index.html        # Main page
-│   ├── app.js            # Application logic
-│   └── styles.css        # Custom styles (minimal, uses Tailwind)
-│
-├── lib/                  # js-fileexplorer library
-│   ├── fancy-file-explorer.css
-│   └── file_explorer.js
-│
-├── build/
-│   └── generate.js       # Build script
-│
-├── package.json
-├── PRD.md                # Product requirements
-└── README.md             # This file
-```
+See [CLAUDE.md - Directory Structure](./CLAUDE.md#directory-structure) and [PRD.md - Project Structure](./PRD.md#project-structure) for detailed structure documentation.
 
 ## Usage
 
@@ -129,45 +96,22 @@ recycle/
 
 ### Markdown Pairing
 
-The markdown pairing feature is incredibly useful for documenting files:
-
-```
-content/
-├── screenshot.png           # The image
-├── screenshot.png.md        # Description (shown with image)
-├── diagram.svg              # The SVG
-├── diagram.svg.md           # Explanation (shown with SVG)
-└── README.md                # Standalone markdown (shown alone)
+Create a `.md` file with the same name as any file to add a description:
+```bash
+echo "# My Image\n\nDescription..." > content/images/photo.png.md
 ```
 
-**Important**: Paired `.md` files (like `screenshot.png.md`) do NOT appear as separate entries in the file browser—they're automatically embedded with their paired file.
+Paired `.md` files are automatically embedded with their file and hidden from listings. See [CLAUDE.md - Markdown Pairing Feature](./CLAUDE.md#markdown-pairing-feature) for implementation details.
 
 ### Supported File Types
 
-**Images** (fully supported):
-- PNG (`.png`)
-- JPEG (`.jpg`, `.jpeg`)
-- GIF (`.gif`)
-- SVG (`.svg`)
-- WebP (`.webp`)
+**v1.0**: Images (PNG, JPEG, GIF, SVG, WebP) and Markdown
 
-**Text** (fully supported):
-- Markdown (`.md`)
-
-**Future**: PDF, videos, and more file types can be added
+See [CLAUDE.md - Supported File Types](./CLAUDE.md#supported-file-types) for details and [PRD.md - Future Enhancements](./PRD.md#future-enhancements-post-v1) for planned additions.
 
 ## Build Process
 
-The build script (`build/generate.js`) does the following:
-
-1. **Walks the content directory** recursively
-2. **Detects paired markdown files** (e.g., `file.ext` + `file.ext.md`)
-3. **Generates directory JSON files** with file listings
-4. **Generates file detail JSON** with metadata
-5. **Creates thumbnails** for images (200×200px)
-6. **Extracts metadata** (dimensions, file sizes, dates)
-7. **Parses markdown** to HTML with syntax highlighting
-8. **Copies files** to `public/content/`
+The build script pre-generates all JSON data and processes content at build time. See [CLAUDE.md - Architecture](./CLAUDE.md#architecture) for technical details.
 
 ### Build Commands
 
@@ -223,74 +167,24 @@ rsync -av public/ user@yourserver.com:/var/www/html/
 
 ## Development
 
-### Architecture
+For architecture details, implementation patterns, and coding standards, see [CLAUDE.md](./CLAUDE.md).
 
-The application uses a **hybrid static/dynamic approach**:
+**Quick Reference:**
+- Architecture: [CLAUDE.md - Architecture](./CLAUDE.md#architecture)
+- Design Patterns: [CLAUDE.md - Critical Design Pattern](./CLAUDE.md#critical-design-pattern-overriding-js-fileexplorer)
+- Adding Features: [CLAUDE.md - Common Patterns](./CLAUDE.md#common-patterns)
 
-1. **Build time**: Generate JSON data files for all content
-2. **Runtime**: Single-page app that loads JSON on demand
-3. **Navigation**: Hash-based routing (`#/path/to/folder`)
-4. **Rendering**: Client-side, instant, no server calls
+## Issue Tracking
 
-### Key Components
-
-**`app.js`** - The orchestrator:
-- Hash router for navigation
-- FileExplorer integration (overrides `onrefresh` callback)
-- Detail view rendering (images, markdown, paired content)
-- State management (browser ↔ detail view)
-
-**`build/generate.js`** - The generator:
-- Directory traversal and file detection
-- Markdown pairing logic
-- Image thumbnail generation (using `sharp`)
-- Metadata extraction
-- JSON generation
-
-**`index.html`** - The shell:
-- Single page with two views (browser and detail)
-- Loads js-fileexplorer library
-- Tailwind CSS for styling
-
-### Working with js-fileexplorer
-
-js-fileexplorer expects a server backend, but we override its callbacks to use static data:
-
-```javascript
-const explorer = new FileExplorer(container, {
-    // Override data loading
-    onrefresh: async (folder, required) => {
-        const path = folder.GetPath();
-        const jsonFile = `data/${pathToJson(path)}`;
-        const response = await fetch(jsonFile);
-        const data = await response.json();
-        folder.SetEntries(data.entries);
-    },
-
-    // Handle file clicks
-    onopenfile: (folder, entry) => {
-        showFileDetail(entry.id);
-    }
-});
-```
-
-## Beads Integration
-
-This project uses [beads](https://github.com/patrickjm/beads) for issue tracking. View issues:
+This project uses [beads](https://github.com/patrickjm/beads) for issue tracking:
 
 ```bash
-# List all issues
-bd list
-
-# Show a specific issue
-bd show recycle-4ry
-
-# Show ready work
-bd ready
-
-# Update an issue
-bd update recycle-4ry --status in-progress
+bd list          # List all issues
+bd ready         # Show ready work
+bd show <id>     # View specific issue
 ```
+
+See [CLAUDE.md - Issue Tracking](./CLAUDE.md#issue-tracking-with-beads) for more commands.
 
 ## Contributing
 
@@ -303,14 +197,7 @@ bd update recycle-4ry --status in-progress
 
 ## Design Philosophy
 
-This project follows the **ultrathink** philosophy:
-
-- **Think Different**: Question assumptions, find elegant solutions
-- **Obsess Over Details**: Every interaction should feel natural
-- **Plan Like Da Vinci**: Clear architecture, clean separation of concerns
-- **Craft, Don't Code**: Every function name should sing
-- **Iterate Relentlessly**: The first version is never good enough
-- **Simplify Ruthlessly**: Remove complexity without losing power
+This project follows the **ultrathink** philosophy: question assumptions, obsess over details, and simplify ruthlessly. See [CLAUDE.md - Design Philosophy](./CLAUDE.md#design-philosophy-ultrathink) for implementation guidance.
 
 ## Roadmap
 

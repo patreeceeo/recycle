@@ -2,11 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+> **📖 Quick Links:** [README.md](./README.md) for setup and usage | [PRD.md](./PRD.md) for requirements and user stories
+
 ## Project Overview
 
 Recycle is a **static file browser** - a zero-backend web application that transforms a content directory into an interactive file browser. The key innovation is using js-fileexplorer (designed for dynamic backends) with pre-generated JSON data to create a fully static site that feels dynamic.
 
 **Core Constraint**: No backend. Everything is pre-generated at build time and deployed as static files.
+
+For product vision and goals, see [PRD.md - Vision](./PRD.md#vision).
 
 ## Architecture
 
@@ -65,48 +69,12 @@ This requires careful handling in `build/generate.js`:
 
 ## Data Format
 
-### Directory JSON (`data/{path}.json`)
-```json
-{
-  "path": "/images",
-  "name": "images",
-  "entries": [
-    {
-      "id": "images-logo.png",
-      "name": "logo.png",
-      "type": "file",
-      "size": 45230,
-      "mimeType": "image/png",
-      "thumbnail": "/thumbnails/images/logo.png"
-    }
-  ]
-}
-```
+See [PRD.md - Technical Specifications](./PRD.md#technical-specifications) for complete JSON format specifications.
 
-### File Detail JSON (`data/files/{id}.json`)
-
-**Image with paired markdown:**
-```json
-{
-  "id": "images-logo.png",
-  "url": "/public/content/images/logo.png",
-  "metadata": {"width": 512, "height": 512},
-  "description": {
-    "content": "...",
-    "html": "<h1>Logo</h1>..."
-  }
-}
-```
-
-**Standalone markdown:**
-```json
-{
-  "id": "docs-README.md",
-  "type": "text/markdown",
-  "content": "# README...",
-  "html": "<h1>README</h1>..."
-}
-```
+**Key Points:**
+- Directory JSON: Contains `entries` array with file/folder metadata
+- File Detail JSON: Full metadata, URLs, thumbnails, and paired markdown
+- IDs use format: `{path}-{filename}` (e.g., `images-logo.png`)
 
 ## Directory Structure
 
@@ -129,26 +97,13 @@ build/
 
 ## Development Workflow
 
-### Building
-```bash
-npm run build              # Full build
-npm run build -- --verbose # Verbose output
-npm run clean              # Remove generated files
-npm run watch              # Rebuild on changes
-```
+See [README.md - Build Process](./README.md#build-process) for commands.
 
-### Local Development
-```bash
-npm start                  # Serve public/ directory
-```
-
-Visit `http://localhost:8000` to browse.
-
-### Testing Changes
-After modifying `build/generate.js` or `src/`:
-1. Run `npm run build`
-2. Run `npm start`
-3. Test in browser
+**Quick Test Cycle:**
+1. Modify code in `build/generate.js` or `src/`
+2. `npm run build` - rebuild
+3. `npm start` - serve locally
+4. Test in browser at `http://localhost:8000`
 
 ## Supported File Types
 
@@ -187,8 +142,8 @@ This project follows the **ultrathink** philosophy:
 - **Simplify Ruthlessly**: Minimum viable architecture, maximum functionality
 - **Craft, Don't Code**: Function names, abstractions, and UX should "sing"
 
-When implementing features:
-1. Read PRD.md for acceptance criteria
+**When implementing features:**
+1. Check [PRD.md - User Stories](./PRD.md#user-stories) for acceptance criteria
 2. Understand the constraint: **zero backend, everything is static**
 3. Design for elegance: if it feels complicated, there's a simpler way
 4. Test the full user flow: build → deploy → browse
@@ -220,7 +175,7 @@ Optimize for reading and debugging first. Premature optimization is the root of 
    - Add rendering logic in `showFileDetail()`
    - Handle the new file type's display
 
-3. Update supported formats in README.md
+3. Update supported formats in [README.md](./README.md#supported-file-types)
 
 ### Debugging Build Issues
 
@@ -240,13 +195,7 @@ Use browser DevTools Network tab to see which JSON files are fetched.
 
 ## Deployment
 
-Build generates `public/` directory - deploy that:
-
-- **GitHub Pages**: Push `public/` to `gh-pages` branch
-- **Netlify/Vercel**: Set publish directory to `public/`
-- **Manual**: `rsync -av public/ user@server:/path/`
-
-No server configuration needed - just static file hosting.
+Build generates `public/` directory - deploy that anywhere. See [README.md - Deployment](./README.md#deployment) for platform-specific instructions (GitHub Pages, Netlify, Vercel, etc.).
 
 ## Non-Goals (Don't Implement)
 

@@ -1,5 +1,7 @@
 # Product Requirements Document: Static File Browser
 
+> **📖 Quick Links:** [README.md](./README.md) for setup and usage | [CLAUDE.md](./CLAUDE.md) for technical architecture
+
 ## Overview
 
 A web-based, read-only file browser built as a static site using js-fileexplorer. The browser enables users to navigate directories and view file details without requiring a backend server.
@@ -25,21 +27,13 @@ Create an elegant, zero-backend file browsing experience that feels dynamic and 
 
 ## Technical Architecture
 
-### Stack
-- **Library**: js-fileexplorer (CubicleSOFT)
-- **Build**: Node.js script for JSON generation
-- **Frontend**: Vanilla JavaScript, single-page application
-- **Routing**: Hash-based navigation
-- **Styling**: Custom CSS with responsive design
+For detailed architecture and implementation patterns, see [CLAUDE.md - Architecture](./CLAUDE.md#architecture).
 
-### Data Flow
-```
-content/ → build script → data/ + public/
-                           ↓
-                      index.html + app.js
-                           ↓
-                    File Browser Interface
-```
+**High-level overview:**
+- **Library**: js-fileexplorer (adapted for static use)
+- **Build Time**: Node.js generates all JSON data
+- **Runtime**: Single-page app with hash routing
+- **Key Innovation**: Override js-fileexplorer callbacks to load static JSON instead of AJAX
 
 ## User Stories
 
@@ -227,96 +221,31 @@ content/ → build script → data/ + public/
 ```
 
 ## Project Structure
+
 ```
 recycle/
-├── content/              # Source content to browse
-│   ├── images/
-│   │   ├── logo.png
-│   │   └── logo.png.md
-│   └── docs/
-│       └── README.md
-├── data/                 # Generated JSON files
-│   ├── root.json
-│   ├── images.json
-│   ├── docs.json
-│   └── files/
-│       ├── logo.png.json
-│       └── README.md.json
-├── public/               # Deployed static files
-│   └── content/          # Original files (copied)
-│       ├── images/
-│       └── docs/
-├── thumbnails/           # Generated thumbnails
-│   └── images/
-│       └── logo.png
-├── src/
-│   ├── index.html        # Main page
-│   ├── app.js            # Application logic
-│   └── styles.css        # Styling
+├── content/              # Source content (add your files here)
+├── data/                 # Generated JSON (build output)
+├── public/               # Deployable static files (build output)
+├── src/                  # Application source code
 ├── lib/                  # js-fileexplorer library
-│   ├── fancy-file-explorer.css
-│   └── file_explorer.js
-├── build/
-│   └── generate.js       # Build script
-├── package.json
-└── PRD.md                # This document
+└── build/generate.js     # Build script
 ```
+
+See [CLAUDE.md - Directory Structure](./CLAUDE.md#directory-structure) for detailed breakdown.
 
 ## Implementation Phases
 
-### Phase 1: Foundation
-- Set up project structure
-- Install/download js-fileexplorer
-- Create sample content directory
-- Initialize package.json
+**Phase 1**: Foundation (project structure, dependencies)
+**Phase 2**: Build System (JSON generation, markdown pairing)
+**Phase 3**: Image Processing (thumbnails, metadata)
+**Phase 4**: Markdown Processing (HTML rendering, syntax highlighting)
+**Phase 5**: Frontend Core (SPA, routing, js-fileexplorer integration)
+**Phase 6**: Detail View (image/markdown rendering, navigation)
+**Phase 7**: Polish & UX (styling, responsive design, animations)
+**Phase 8**: Documentation & Testing (cross-browser, demo content)
 
-### Phase 2: Build System
-- Create build script skeleton
-- Implement directory traversal
-- Generate directory JSON files
-- Detect and pair markdown files
-- Copy files to public directory
-
-### Phase 3: Image Processing
-- Generate thumbnails for images
-- Extract image metadata (dimensions)
-- Support all image formats (PNG, JPEG, GIF, SVG, WebP)
-
-### Phase 4: Markdown Processing
-- Parse markdown to HTML
-- Handle standalone markdown files
-- Handle paired markdown descriptions
-- Apply syntax highlighting for code blocks
-
-### Phase 5: Frontend Core
-- Create index.html structure
-- Initialize js-fileexplorer
-- Implement hash-based routing
-- Override onrefresh callback for static data
-- Load and display directory contents
-
-### Phase 6: Detail View
-- Create detail view container
-- Implement view toggling logic
-- Render image detail view
-- Render markdown detail view
-- Render paired image + markdown
-- Add back navigation
-
-### Phase 7: Polish & UX
-- Style the interface
-- Add responsive CSS
-- Implement loading states
-- Add error handling
-- Test on multiple devices
-- Add animations/transitions
-
-### Phase 8: Documentation & Testing
-- Write usage documentation
-- Test all user flows
-- Test on different browsers
-- Create demo content
-- Deploy to static host
+See [README.md](./README.md) for setup instructions and [CLAUDE.md](./CLAUDE.md) for implementation guidance.
 
 ## Success Metrics
 
