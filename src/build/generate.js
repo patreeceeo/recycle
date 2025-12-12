@@ -1,6 +1,23 @@
 const fs = require('fs').promises;
 const path = require('path');
+const { marked } = require('marked');
+const hljs = require('highlight.js');
 const { ok, fail } = require('../result');
+
+// Configure marked with syntax highlighting
+marked.setOptions({
+  highlight: function (code, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(code, { language: lang }).value;
+      } catch (err) {
+        // Fallback to plain code if highlighting fails
+      }
+    }
+    return code;
+  },
+  langPrefix: 'language-',
+});
 
 /**
  * Recursively walks a directory and returns all file paths
@@ -53,6 +70,27 @@ async function walkDirectory(dir) {
   }
 }
 
+/**
+ * Converts markdown to HTML with syntax highlighting
+ * @param {string} markdown - The markdown content to convert
+ * @returns {Promise<Result<string, string>>} - Result with HTML content or error
+ */
+async function processMarkdown(markdown) {
+  // Validate input
+  if (typeof markdown !== 'string') {
+    return fail('Input must be a string');
+  }
+
+  try {
+    // Convert markdown to HTML
+    const html = marked.parse(markdown);
+    return ok(html);
+  } catch (error) {
+    return fail(`Failed to parse markdown: ${error.message}`);
+  }
+}
+
 module.exports = {
   walkDirectory,
+  processMarkdown,
 };

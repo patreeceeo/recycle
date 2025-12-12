@@ -98,4 +98,48 @@ describe('build script', () => {
       );
     });
   });
+
+  describe('processMarkdown', () => {
+    test('converts markdown to HTML with syntax highlighting', async () => {
+      const { processMarkdown } = require('./generate.js');
+
+      const markdown = `# Hello World
+
+This is a **bold** text.
+
+\`\`\`javascript
+function hello() {
+  console.log("Hello World!");
+}
+\`\`\`
+`;
+
+      const result = await processMarkdown(markdown);
+      expect(result.isOk()).toBe(true);
+
+      const html = result.unwrap();
+      expect(html).toContain('<h1 id="hello-world">Hello World</h1>');
+      expect(html).toContain('<strong>bold</strong>');
+      expect(html).toContain('<code class="language-javascript">');
+      // console.log gets split into spans with highlighting
+      expect(html).toMatch(/hljs-title.*function_.*log/);
+    });
+
+    test('handles empty markdown', async () => {
+      const { processMarkdown } = require('./generate.js');
+
+      const result = await processMarkdown('');
+      expect(result.isOk()).toBe(true);
+      const html = result.unwrap();
+      expect(html).toBe('');
+    });
+
+    test('returns Fail result for invalid input', async () => {
+      const { processMarkdown } = require('./generate.js');
+
+      const result = await processMarkdown(null);
+      expect(result.isFail()).toBe(true);
+      expect(result.unwrapErr()).toContain('Input must be a string');
+    });
+  });
 });
