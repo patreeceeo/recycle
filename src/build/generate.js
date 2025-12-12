@@ -26,9 +26,16 @@ function getMimeType(ext) {
 // Configure marked with syntax highlighting
 marked.setOptions({
   highlight: function (code, lang) {
+    // @ts-ignore - highlight.js types are incompatible
     if (lang && hljs.getLanguage(lang)) {
       try {
-        return hljs.highlight(code, { language: lang }).value;
+        // @ts-ignore - highlight.js types are incompatible
+        const result = hljs.highlight(code, {
+          language: lang,
+          ignoreIllegals: true,
+        });
+        // @ts-ignore - result type is incompatible
+        return result.value;
       } catch (err) {
         // Fallback to plain code if highlighting fails
       }
@@ -41,7 +48,7 @@ marked.setOptions({
 /**
  * Recursively walks a directory and returns all file paths
  * @param {string} dir - Directory path to walk
- * @returns {Promise<Result<string[], string>>} - Result with array of file paths or error
+ * @returns {Promise<import('../result').Result<string[], string>>} - Result with array of file paths or error
  */
 async function walkDirectory(dir) {
   // Validate input
@@ -92,7 +99,7 @@ async function walkDirectory(dir) {
 /**
  * Converts markdown to HTML with syntax highlighting
  * @param {string} markdown - The markdown content to convert
- * @returns {Promise<Result<string, string>>} - Result with HTML content or error
+ * @returns {Promise<import('../result').Result<string, string>>} - Result with HTML content or error
  */
 async function processMarkdown(markdown) {
   // Validate input
@@ -130,7 +137,7 @@ async function processMarkdown(markdown) {
  * Creates JSON structure for a directory listing
  * @param {string} dirName - Directory name (relative to content root)
  * @param {string[]} entries - Array of file/directory paths
- * @returns {Promise<Result<DirectoryJSON, string>>} - Result with directory JSON or error
+ * @returns {Promise<import('../result').Result<DirectoryJSON, string>>} - Result with directory JSON or error
  */
 async function createDirectoryJSON(dirName, entries) {
   if (typeof dirName !== 'string' || dirName.trim() === '') {
@@ -142,6 +149,7 @@ async function createDirectoryJSON(dirName, entries) {
   }
 
   try {
+    /** @type {DirectoryEntry[]} */
     const dirEntries = await Promise.all(
       entries.map(async entryPath => {
         const stats = await fs.stat(entryPath);
@@ -151,22 +159,26 @@ async function createDirectoryJSON(dirName, entries) {
         const modified = stats.mtime.toISOString();
 
         if (stats.isDirectory()) {
-          return {
+          /** @type {DirectoryEntry} */
+          const entry = {
             id,
             name,
             type: 'directory',
             modified,
           };
+          return entry;
         }
 
-        return {
+        /** @type {DirectoryEntry} */
+        const entry = {
           id,
           name,
           type: 'file',
-          size: stats.size,
+          size: stats.size.toString(),
           modified,
           mimeType: getMimeType(path.extname(name)),
         };
+        return entry;
       })
     );
 
@@ -177,11 +189,13 @@ async function createDirectoryJSON(dirName, entries) {
       return a.name.localeCompare(b.name);
     });
 
-    return ok({
+    /** @type {DirectoryJSON} */
+    const result = {
       path: `/${dirName}`,
       name: dirName,
       entries: dirEntries,
-    });
+    };
+    return ok(result);
   } catch (error) {
     return fail(`Failed to create directory JSON: ${error.message}`);
   }

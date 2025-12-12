@@ -167,7 +167,7 @@ function hello() {
             entry.id &&
             entry.name &&
             entry.type === 'file' &&
-            entry.size > 0 &&
+            entry.size &&
             entry.modified &&
             entry.mimeType
         )

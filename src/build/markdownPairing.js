@@ -45,9 +45,15 @@ function getBaseFilePath(filename) {
 }
 
 /**
+ * @typedef {Object} MarkdownPairingResult
+ * @property {boolean} isPaired - Whether the markdown is paired with another file
+ * @property {string} [basePath] - The base file path if paired
+ */
+
+/**
  * Gets markdown pairing information as a Result
  * @param {string} filename - The filename to check
- * @returns {Result<{isPaired: boolean, basePath?: string}, string>} - Result with pairing info
+ * @returns {import('../result').Result<MarkdownPairingResult, string>} - Result with pairing info
  */
 function getMarkdownPairing(filename) {
   // Validate input

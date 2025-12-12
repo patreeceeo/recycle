@@ -1,5 +1,7 @@
 /**
  * Simple error throwing utility for Result monad
+ * @param {string} message - Error message to throw
+ * @returns {never} - Never returns, always throws
  */
 function raise(message) {
   throw new Error(message);
@@ -7,15 +9,12 @@ function raise(message) {
 
 /**
  * Represents a result that can be either a success (Ok) or a failure (Fail).
- *
- * This is a monadic type that provides a way to handle errors explicitly without
- * throwing exceptions. It's useful for operations that can fail in expected ways
- * where you want to provide clear error handling and type safety.
+ * This is a monadic type that helps handle errors without exceptions.
  */
 class Result {
   /**
    * Type guard that checks if the result is a success (Ok).
-   * When this returns true, the result is an Ok instance.
+   * @returns {boolean} True if the result is Ok, false if Fail
    */
   isOk() {
     return false;
@@ -23,7 +22,7 @@ class Result {
 
   /**
    * Type guard that checks if the result is a failure (Fail).
-   * When this returns true, the result is a Fail instance.
+   * @returns {boolean} True if the result is Fail, false if Ok
    */
   isFail() {
     return false;
@@ -49,7 +48,7 @@ class Result {
 
   /**
    * Returns the success value if the result is Ok, otherwise returns the provided default value.
-   * @param defaultValue - The value to return if the result is Fail
+   * @param {*} defaultValue - The value to return if the result is Fail
    * @returns The success value or the default value
    */
   orElse(defaultValue) {
@@ -58,9 +57,9 @@ class Result {
 
   /**
    * Pattern matches on the result and applies the appropriate handler.
-   * @param handlers - Object with ok and fail handler functions
-   * @param handlers.ok - Function to handle success case
-   * @param handlers.fail - Function to handle failure case
+   * @param {Object} handlers - Object with ok and fail handler functions
+   * @param {Function} handlers.ok - Function called if result is Ok
+   * @param {Function} handlers.fail - Function called if result is Fail
    * @returns The result of applying the appropriate handler
    */
   match(handlers) {
@@ -70,8 +69,8 @@ class Result {
   /**
    * Maps the success value of an Ok result using the provided function.
    * If the result is Fail, the error value is passed through unchanged.
-   * @param fn - Function to transform the success value
-   * @returns Result<U, E> - Ok<U> with transformed value or Fail<E>
+   * @param {Function} fn - Function to transform the success value
+   * @returns A new Result with the transformed value
    */
   map(fn) {
     return this;
@@ -79,18 +78,24 @@ class Result {
 
   /**
    * Given a type guard function for the value, narrows the Result to Ok if the guard passes.
-   * If the Result is a Fail, it remains Fail.
-   * @param typeGuard - A function that checks if a value passes a condition
-   * @returns Result<U, E> - Ok<U> if guard passed, otherwise Fail<E>
+   * @param {Function} typeGuard - A function that checks if a value passes a condition
+   * @returns A new Result with the narrowed type if the guard passes
    */
   guardType(typeGuard) {
     return this;
   }
 }
 
+/**
+ * Ok class - represents a successful Result containing a value
+ */
 class Ok extends Result {
+  /**
+   * @param {*} value - The success value
+   */
   constructor(value) {
     super();
+    /** @private */
     this.value = value;
   }
 
@@ -135,9 +140,16 @@ class Ok extends Result {
   }
 }
 
+/**
+ * Fail class - represents a failed Result containing an error
+ */
 class Fail extends Result {
+  /**
+   * @param {*} error - The error value
+   */
   constructor(error) {
     super();
+    /** @private */
     this.error = error;
   }
 
@@ -180,11 +192,11 @@ class Fail extends Result {
 
 /**
  * Creates a successful Result containing the provided value.
- * @param {*} t - The success value to wrap in a Result
- * @returns {Result} - A Result representing success
+ * @param {*} value - The success value to wrap in a Result
+ * @returns An Ok Result containing the value
  */
-function ok(t) {
-  return new Ok(t);
+function ok(value) {
+  return new Ok(value);
 }
 
 /**
@@ -192,35 +204,35 @@ function ok(t) {
  * If the condition is true, returns an Ok result with the provided success value.
  * If the condition is false, returns a Fail result with the provided error value.
  * @param {boolean} condition - The boolean condition to evaluate
- * @param {*} t - The success value to use if the condition is true
- * @param {*} e - The error value to use if the condition is false
- * @returns {Result} - Ok with t if condition is true, Fail with e if false
+ * @param {*} successValue - The success value to use if the condition is true
+ * @param {*} errorValue - The error value to use if the condition is false
+ * @returns Ok with successValue if condition is true, Fail with errorValue if false
  */
-function okIf(condition, t, e) {
+function okIf(condition, successValue, errorValue) {
   if (condition) {
-    return ok(t);
+    return ok(successValue);
   } else {
-    return fail(e);
+    return fail(errorValue);
   }
 }
 
 /**
  * Creates a Result based on whether the provided value is defined.
- * @param {*} t - The value that may be undefined
- * @param {*} err - The error value to use if t is undefined
- * @returns {Result} - Ok if t is defined, Fail with err if undefined
+ * @param {*} value - The value that may be undefined
+ * @param {*} errorValue - The error value to use if value is undefined
+ * @returns Ok if value is defined, Fail with errorValue if undefined
  */
-function okIfDefined(t, err) {
-  return okIf(t !== undefined, t, err);
+function okIfDefined(value, errorValue) {
+  return okIf(value !== undefined, value, errorValue);
 }
 
 /**
  * Creates a failure Result containing the provided error.
- * @param {*} e - The error value to wrap in a Result
- * @returns {Result} - A Result representing failure
+ * @param {*} error - The error value to wrap in a Result
+ * @returns A Fail Result containing the error
  */
-function fail(e) {
-  return new Fail(e);
+function fail(error) {
+  return new Fail(error);
 }
 
 module.exports = {

@@ -10,7 +10,8 @@
     "build": "node src/build/generate.js",
     "clean": "rm -rf data/ public/",
     "start": "npm run build && cd public && python3 -m http.server 8000",
-    "prepare": "husky"
+    "prepare": "husky",
+    "watchtypes": "tsc --noEmit --watch --project ./jsconfig.json"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,css,md,yml,yaml}": [
@@ -21,11 +22,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.0.1",
     "highlight.js": "^11.11.1",
     "husky": "^9.1.7",
     "jest": "^30.2.0",
     "lint-staged": "^16.2.7",
     "marked": "^4.3.0",
-    "prettier": "^3.7.4"
+    "prettier": "^3.7.4",
+    "typescript": "^5.9.3"
   }
 }
