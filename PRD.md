@@ -251,7 +251,7 @@ recycle/
 ├── public/               # Deployable static files (build output)
 ├── src/                  # Application source code
 ├── lib/                  # js-fileexplorer library
-└── build/generate.js     # Build script
+└── src/build/generate.js     # Build script
 ```
 
 See [CLAUDE.md - Directory Structure](./CLAUDE.md#directory-structure) for detailed breakdown.

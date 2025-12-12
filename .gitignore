@@ -6,7 +6,6 @@ public/
 data/
 thumbnails/
 dist/
-build/
 
 # Logs
 *.log

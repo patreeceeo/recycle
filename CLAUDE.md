@@ -18,7 +18,7 @@ For product vision and goals, see [PRD.md - Vision](./PRD.md#vision).
 
 The system operates in two phases:
 
-1. **Build Time** (`build/generate.js`):
+1. **Build Time** (`src/build/generate.js`):
    - Walks `content/` directory recursively
    - Generates JSON for each directory and file
    - Creates image thumbnails (200×200px)
@@ -63,7 +63,7 @@ A unique feature: `file.ext.md` files are automatically paired with `file.ext`:
 - Standalone `.md` files appear normally
 - Build script detects pairing during two-pass directory traversal
 
-This requires careful handling in `build/generate.js`:
+This requires careful handling in `src/build/generate.js`:
 
 1. First pass: identify all `.md` files and check if base file exists
 2. Second pass: process files, skip paired `.md`, embed description in base file's JSON
@@ -103,7 +103,7 @@ See [README.md - Build Process](./README.md#build-process) for commands.
 
 **Quick Test Cycle:**
 
-1. Modify code in `build/generate.js` or `src/`
+1. Modify code in `src/build/generate.js` or `src/`
 2. `npm run build` - rebuild
 3. `npm start` - serve locally
 4. Test in browser at `http://localhost:8000`
@@ -175,7 +175,7 @@ Optimize for reading and debugging first. Premature optimization is the root of 
 
 ### Adding a New File Type
 
-1. Update `build/generate.js`:
+1. Update `src/build/generate.js`:
    - Add MIME type detection
    - Generate appropriate metadata
    - Create preview/thumbnail if needed
