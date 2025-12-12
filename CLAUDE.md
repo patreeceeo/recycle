@@ -171,6 +171,9 @@ Optimize for reading and debugging first. Premature optimization is the root of 
 - Add comments that explain thinking behind tricky, complex or counter intuitive code, but do not over do it!
 - Use console.log sensibly
 
+Never use `any`, `Object` or `{}` as parameter or return types unless explicitly told to do so.
+Tests should test the behavior, not the implementation. Avoid testing for precise values (e.g. error message strings) unless this precise value is actually important.
+
 ## Common Patterns
 
 ### Adding a New File Type
