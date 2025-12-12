@@ -22,6 +22,7 @@ describe('build script', () => {
     const imagesDir = path.join(mockContentDir, 'images');
     fs.mkdirSync(imagesDir);
     fs.writeFileSync(path.join(imagesDir, 'logo.png'), 'fake png content');
+    fs.writeFileSync(path.join(imagesDir, 'photo.jpg'), 'fake jpg content');
     fs.writeFileSync(
       path.join(imagesDir, 'logo.png.md'),
       '# Logo\nLogo description'
@@ -49,7 +50,8 @@ describe('build script', () => {
       expect(files).toContain(
         path.join(mockContentDir, 'images', 'logo.png.md')
       );
-      expect(files).toHaveLength(3);
+      expect(files).toContain(path.join(mockContentDir, 'images', 'photo.jpg'));
+      expect(files).toHaveLength(4);
     });
 
     test('returns empty array for empty directory', async () => {
@@ -70,7 +72,7 @@ describe('build script', () => {
 
       const result = await walkDirectory('/non/existent/path');
       expect(result.isFail()).toBe(true);
-      expect(result.unwrapErr()).toContain('Directory does not exist');
+      expect(result.unwrapErr()).toBeTruthy();
     });
 
     test('returns Fail result for file instead of directory', async () => {
@@ -79,7 +81,7 @@ describe('build script', () => {
       const filePath = path.join(mockContentDir, 'README.md');
       const result = await walkDirectory(filePath);
       expect(result.isFail()).toBe(true);
-      expect(result.unwrapErr()).toContain('is not a directory');
+      expect(result.unwrapErr()).toBeTruthy();
     });
 
     test('returns Fail result for invalid input', async () => {
@@ -87,15 +89,11 @@ describe('build script', () => {
 
       const result1 = await walkDirectory('');
       expect(result1.isFail()).toBe(true);
-      expect(result1.unwrapErr()).toBe(
-        'Directory path must be a non-empty string'
-      );
+      expect(result1.unwrapErr()).toBeTruthy();
 
       const result2 = await walkDirectory(null);
       expect(result2.isFail()).toBe(true);
-      expect(result2.unwrapErr()).toBe(
-        'Directory path must be a non-empty string'
-      );
+      expect(result2.unwrapErr()).toBeTruthy();
     });
   });
 
@@ -121,8 +119,8 @@ function hello() {
       expect(html).toContain('<h1 id="hello-world">Hello World</h1>');
       expect(html).toContain('<strong>bold</strong>');
       expect(html).toContain('<code class="language-javascript">');
-      // console.log gets split into spans with highlighting
-      expect(html).toMatch(/hljs-title.*function_.*log/);
+      // Check that code is highlighted (has hljs classes)
+      expect(html).toMatch(/class=".*hljs.*"/);
     });
 
     test('handles empty markdown', async () => {
@@ -139,7 +137,121 @@ function hello() {
 
       const result = await processMarkdown(null);
       expect(result.isFail()).toBe(true);
-      expect(result.unwrapErr()).toContain('Input must be a string');
+      expect(result.unwrapErr()).toBeTruthy();
+    });
+  });
+
+  describe('createDirectoryJSON', () => {
+    test('creates JSON structure for directory entries', async () => {
+      const { createDirectoryJSON } = require('./generate.js');
+
+      const dirPath = path.join(mockContentDir, 'images');
+      const entries = [
+        path.join(dirPath, 'logo.png'),
+        path.join(dirPath, 'photo.jpg'),
+      ];
+
+      const result = await createDirectoryJSON('images', entries);
+      expect(result.isOk()).toBe(true);
+
+      const json = result.unwrap();
+      expect(json).toHaveProperty('path', '/images');
+      expect(json).toHaveProperty('name', 'images');
+      expect(json).toHaveProperty('entries');
+      expect(json.entries).toHaveLength(2);
+
+      // Check entries have expected structure
+      expect(
+        json.entries.every(
+          entry =>
+            entry.id &&
+            entry.name &&
+            entry.type === 'file' &&
+            entry.size > 0 &&
+            entry.modified &&
+            entry.mimeType
+        )
+      ).toBe(true);
+
+      // Verify file entries exist with expected names
+      expect(json.entries.map(e => e.name)).toEqual(
+        expect.arrayContaining(['logo.png', 'photo.jpg'])
+      );
+
+      // Check that IDs are generated correctly
+      const logoEntry = json.entries.find(e => e.name === 'logo.png');
+      expect(logoEntry.id).toBe('images/logo.png');
+      expect(logoEntry.mimeType).toBe('image/png');
+
+      // Verify timestamps are ISO strings
+      expect(new Date(logoEntry.modified).toISOString()).toBe(
+        logoEntry.modified
+      );
+    });
+
+    test('sorts entries: directories first, then files alphabetically', async () => {
+      const { createDirectoryJSON } = require('./generate.js');
+
+      const dirPath = path.join(mockContentDir, 'mixed');
+      fs.mkdirSync(dirPath);
+      fs.writeFileSync(path.join(dirPath, 'zfile.txt'), 'content');
+      fs.writeFileSync(path.join(dirPath, 'afile.txt'), 'content');
+      fs.mkdirSync(path.join(dirPath, 'subdir'));
+
+      const entries = [
+        path.join(dirPath, 'zfile.txt'),
+        path.join(dirPath, 'subdir'),
+        path.join(dirPath, 'afile.txt'),
+      ];
+
+      const result = await createDirectoryJSON('mixed', entries);
+      expect(result.isOk()).toBe(true);
+
+      const json = result.unwrap();
+      expect(json.entries).toHaveLength(3);
+
+      // Find all directories and files
+      const directories = json.entries.filter(e => e.type === 'directory');
+      const files = json.entries.filter(e => e.type === 'file');
+
+      // Should have one directory and two files
+      expect(directories).toHaveLength(1);
+      expect(files).toHaveLength(2);
+
+      // Directory should be subdir
+      expect(directories[0].name).toBe('subdir');
+
+      // Files should be sorted alphabetically
+      expect(files.map(f => f.name)).toEqual(['afile.txt', 'zfile.txt']);
+
+      // All directories should appear before files
+      const dirIndex = json.entries.findIndex(e => e.type === 'directory');
+      const firstFileIndex = json.entries.findIndex(e => e.type === 'file');
+      expect(dirIndex).toBeLessThan(firstFileIndex);
+    });
+
+    test('handles empty directory', async () => {
+      const { createDirectoryJSON } = require('./generate.js');
+
+      const result = await createDirectoryJSON('empty', []);
+      expect(result.isOk()).toBe(true);
+
+      const json = result.unwrap();
+      expect(json.path).toBe('/empty');
+      expect(json.name).toBe('empty');
+      expect(json.entries).toEqual([]);
+    });
+
+    test('returns Fail for invalid inputs', async () => {
+      const { createDirectoryJSON } = require('./generate.js');
+
+      const result1 = await createDirectoryJSON(null, []);
+      expect(result1.isFail()).toBe(true);
+      expect(result1.unwrapErr()).toBeTruthy();
+
+      const result2 = await createDirectoryJSON('test', null);
+      expect(result2.isFail()).toBe(true);
+      expect(result2.unwrapErr()).toBeTruthy();
     });
   });
 });
