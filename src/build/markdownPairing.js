@@ -5,6 +5,7 @@
  * Pattern: filename.ext.md (e.g., logo.png.md describes logo.png)
  */
 
+const { ok, fail } = require('../result');
 const MD_EXTENSION = '.md';
 const DOUBLE_MD_EXTENSION = '.md.md';
 
@@ -43,7 +44,44 @@ function getBaseFilePath(filename) {
   return filename.slice(0, -3);
 }
 
+/**
+ * Gets markdown pairing information as a Result
+ * @param {string} filename - The filename to check
+ * @returns {Result<{isPaired: boolean, basePath?: string}, string>} - Result with pairing info
+ */
+function getMarkdownPairing(filename) {
+  // Validate input
+  if (typeof filename !== 'string' || filename.trim() === '') {
+    return fail('Filename must be a non-empty string');
+  }
+
+  // Check if it's a .md file
+  if (!filename.endsWith(MD_EXTENSION)) {
+    return ok({ isPaired: false });
+  }
+
+  // Check if it's just '.md'
+  if (filename === MD_EXTENSION) {
+    return ok({ isPaired: false });
+  }
+
+  // If it ends with .md.md, it's definitely a paired markdown
+  if (filename.endsWith(DOUBLE_MD_EXTENSION)) {
+    const basePath = filename.slice(0, -3); // Remove final .md
+    return ok({ isPaired: true, basePath });
+  }
+
+  // Check if there's another extension before the final .md
+  const baseName = filename.slice(0, -3); // Remove final .md
+  if (baseName.includes('.')) {
+    return ok({ isPaired: true, basePath: baseName });
+  }
+
+  // It's a standalone .md file
+  return ok({ isPaired: false });
+}
+
+// Only export the Result-based function
 module.exports = {
-  isPairedMarkdown,
-  getBaseFilePath,
+  getMarkdownPairing,
 };
