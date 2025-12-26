@@ -5,6 +5,7 @@ import web.Http exposing [Request, Response]
 import web.Utc
 import web.Url
 import web.File
+import web.Path
 
 import Pages
 import Html
@@ -14,13 +15,6 @@ Model : {}
 
 init! = |{}| Ok {}
 
-join_path : List Str -> Str
-join_path = |parts|
-    if List.is_empty(parts) then
-        "/"
-    else
-        Str.join_with(parts, "/")
-
 respond! : Request, Model => Result Response [ServerErr Str]_
 respond! = |req, _|
     # Log request datetime, method and url
@@ -28,20 +22,14 @@ respond! = |req, _|
 
     try Stdout.line! "${datetime} ${Inspect.to_str req.method} ${req.uri}"
 
-    req_path_parts =
+    req_path =
         req.uri
         |> Url.from_str
         |> Url.path
-        |> Str.split_on("/")
 
-    req_path = join_path(req_path_parts)
-
-    when req_path_parts is
-        ["static", ..] ->
-            file_response! req_path
-
-        _ ->
-            page_response req_path
+    when page_response req_path is
+        Ok response -> Ok response
+        Err _ -> file_response! req_path
 
 page_response : Str -> Result Response [ServerErr Str]
 page_response = |path|
@@ -56,14 +44,23 @@ page_response = |path|
         Err _ ->
             Err ServerErr("Not found: ${path}")
 
+file_response! : Str => Result Response [ServerErr Str]
 file_response! = |path|
-    when File.read_utf8!(path) is
+    rel_path = Str.drop_prefix(path, "/")
+    when File.read_bytes!(rel_path) is
         Ok content ->
             Ok {
                 status: 200,
                 headers: [],
-                body: Str.to_utf8(content),
+                body: content
             }
 
-        Err _ -> Err ServerErr("Error when reading ${path}")
+        Err FileReadErr(err_path, file_err) ->
+            Err ServerErr("${Path.display(err_path)}:\n\t${Inspect.to_str(file_err)}")
+
+        Err FileReadUtf8Err(err_path, _) ->
+            Err ServerErr("Failed to read file ${Path.display(err_path)} as utf8.")
+
+
+
 
