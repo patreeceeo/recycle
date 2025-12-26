@@ -14,6 +14,7 @@ layout = |{ main }|
             MetaCharset "utf-8",
             Meta { name: "viewport", content: "width=device-width, initial-scale=1" },
             Link { rel: "icon", href: "/static/me-duck.png" },
+            Link { rel: "stylesheet", href: "/static/Html.css" },
             Title "/recycle",
         ],
         Body [
@@ -26,13 +27,15 @@ layout = |{ main }|
         ],
     ]
 
-page_index = layout({ main: [Ul(Data.available_items |> List.map render_item)] })
+page_index = layout({ main: [
+    H1 "Welcome to the Recycle Bin!",
+    Grid(Data.available_items |> List.map render_item)
+    ] })
 
 render_item : Data.Item -> Html.Tag
 render_item = |item|
-    Li [
+    Div [
         H2 item.name,
-        P item.description,
         when List.get(item.images, 0) is
             Ok image ->
                 render_image(image)

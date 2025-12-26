@@ -14,6 +14,7 @@ Tag : [
     Link { rel : Str, href : Str },
     Title Str,
     Body (List Tag),
+    Grid (List Tag),
     Div (List Tag),
     Ul (List Tag),
     Li (List Tag),
@@ -40,6 +41,9 @@ render = |tag|
 
         Body children ->
             render_generic("body", [], children)
+
+        Grid children ->
+            render_generic("div", [("style", StringAttribute "display: grid; grid-auto-columns: fit-content(10rem); grid-auto-rows: 10rem;")], children)
 
         Div children ->
             render_generic("div", [], children)
