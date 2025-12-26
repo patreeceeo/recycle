@@ -54,7 +54,7 @@ page_response = |path|
             }
 
         Err _ ->
-            Err ServerErr("404")
+            Err ServerErr("Not found: ${path}")
 
 file_response! = |path|
     when File.read_utf8!(path) is
