@@ -11,6 +11,7 @@ Tag : [
     Head (List Tag),
     MetaCharset Str,
     Meta { name : Str, content : Str },
+    Link { rel : Str, href : Str },
     Title Str,
     Body (List Tag),
     Div (List Tag),
@@ -19,19 +20,7 @@ Tag : [
     Nav (List Tag),
     A { href : Str } Str,
     Main (List Tag),
-    Table (List Tag),
-    Th (List Tag),
-    Tr (List Tag),
-    Td (List Tag),
-    Form { action : Str, method : Str } (List Tag),
-    Label (List Tag),
-    DecInput { name : Str, value : Dec, min : Dec, max : Dec, step : Dec },
-    StrInput { name : Str, value : Str },
-    Select { name : Str },
-    Option { value : Str },
     H1 Str,
-    Dt Str,
-    Dd Str,
 ]
 
 render : Tag -> Str
@@ -61,32 +50,11 @@ render = |tag|
         Main children ->
             render_generic("main", [], children)
 
-        Table children ->
-            render_generic("table", [], children)
-
-        Th children ->
-            render_generic("th", [], children)
-
-        Tr children ->
-            render_generic("tr", [], children)
-
-        Td children ->
-            render_generic("td", [], children)
-
-        Label children ->
-            render_generic("label", [], children)
-
         Title content ->
             render_generic_simple("title", [], content)
 
         H1 content ->
             render_generic_simple("h1", [], content)
-
-        Dt content ->
-            render_generic_simple("dt", [], content)
-
-        Dd content ->
-            render_generic_simple("title", [], content)
 
         MetaCharset charset ->
             render_generic_simple("meta", [("charset", StringAttribute charset)], "")
@@ -94,12 +62,10 @@ render = |tag|
         Meta { name, content } ->
             render_generic_simple("meta", [("name", StringAttribute name), ("content", StringAttribute content)], "")
 
+        Link { rel, href } ->
+            render_generic_simple("link", [("rel", StringAttribute rel), ("href", StringAttribute href)], "")
+
         A { href } content -> render_generic_simple("a", [("href", StringAttribute href)], content)
-        Form { action, method } children -> render_generic("form", [("action", StringAttribute action), ("method", StringAttribute method)], children)
-        DecInput { name, value, min, max, step } -> render_generic_simple("input", [("name", StringAttribute name), ("type", StringAttribute "number"), ("value", NumberAttribute value), ("min", NumberAttribute min), ("max", NumberAttribute max), ("step", NumberAttribute step)], "")
-        StrInput { name, value } -> render_generic_simple("input", [("name", StringAttribute name), ("type", StringAttribute "text"), ("value", StringAttribute value)], "")
-        Select { name } -> render_generic_simple("select", [("name", StringAttribute name)], "")
-        Option { value } -> render_generic_simple("option", [("value", StringAttribute value)], "")
 
 render_generic : Str, List GenericAttribute, List Tag -> Str
 render_generic = |tag_name, attributes, children|
