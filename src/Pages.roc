@@ -27,10 +27,14 @@ layout = |{ main }|
         ],
     ]
 
-page_index = layout({ main: [
-    H1 "Welcome to the Recycle Bin!",
-    Grid(Data.available_items |> List.map render_item)
-    ] })
+page_index = layout(
+    {
+        main: [
+            H1 "Welcome to the Recycle Bin!",
+            Grid(Data.available_items |> List.map render_item),
+        ],
+    },
+)
 
 render_item : Data.Item -> Html.Tag
 render_item = |item|
