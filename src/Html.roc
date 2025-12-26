@@ -21,6 +21,12 @@ Tag : [
     A { href : Str } Str,
     Main (List Tag),
     H1 Str,
+    H2 Str,
+    P Str,
+    Text Str,
+    Img { src: Str, alt: Str },
+    Figure (List Tag),
+    FigCaption Str
 ]
 
 render : Tag -> Str
@@ -50,11 +56,23 @@ render = |tag|
         Main children ->
             render_generic("main", [], children)
 
+        Figure children ->
+            render_generic("figure", [], children)
+
+        FigCaption content ->
+            render_generic_simple("figcaption", [], content)
+
         Title content ->
             render_generic_simple("title", [], content)
 
         H1 content ->
             render_generic_simple("h1", [], content)
+
+        H2 content ->
+            render_generic_simple("h2", [], content)
+
+        P content ->
+            render_generic_simple("p", [], content)
 
         MetaCharset charset ->
             render_generic_simple("meta", [("charset", StringAttribute charset)], "")
@@ -66,6 +84,10 @@ render = |tag|
             render_generic_simple("link", [("rel", StringAttribute rel), ("href", StringAttribute href)], "")
 
         A { href } content -> render_generic_simple("a", [("href", StringAttribute href)], content)
+
+        Text str -> str
+
+        Img { src, alt } -> render_generic_simple("img", [("src", StringAttribute src), ("alt", StringAttribute alt)], "")
 
 render_generic : Str, List GenericAttribute, List Tag -> Str
 render_generic = |tag_name, attributes, children|
