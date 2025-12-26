@@ -52,7 +52,7 @@ file_response! = |path|
             Ok {
                 status: 200,
                 headers: [],
-                body: content
+                body: content,
             }
 
         Err FileReadErr(err_path, file_err) ->
@@ -60,7 +60,4 @@ file_response! = |path|
 
         Err FileReadUtf8Err(err_path, _) ->
             Err ServerErr("Failed to read file ${Path.display(err_path)} as utf8.")
-
-
-
 
