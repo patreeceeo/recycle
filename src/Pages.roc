@@ -1,5 +1,5 @@
 module [
-    dict
+    dict,
 ]
 
 import Html
@@ -24,5 +24,5 @@ layout = |{ main }|
         ],
     ]
 
-page_index = layout({main: [H1 "hello!"]})
+page_index = layout({ main: [H1 "hello!"] })
 

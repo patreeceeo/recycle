@@ -39,6 +39,7 @@ respond! = |req, _|
     when req_path_parts is
         ["static", ..] ->
             file_response! req_path
+
         _ ->
             page_response req_path
 
@@ -49,18 +50,20 @@ page_response = |path|
             Ok {
                 status: 200,
                 headers: [],
-                body: Html.render(content) |> Str.to_utf8
+                body: Html.render(content) |> Str.to_utf8,
             }
+
         Err _ ->
             Err ServerErr("404")
 
 file_response! = |path|
     when File.read_utf8!(path) is
-        Ok content -> Ok {
-            status: 200,
-            headers: [],
-            body: Str.to_utf8(content)
+        Ok content ->
+            Ok {
+                status: 200,
+                headers: [],
+                body: Str.to_utf8(content),
             }
-        Err _ -> Err ServerErr("Error when reading ${path}")
 
+        Err _ -> Err ServerErr("Error when reading ${path}")
 
