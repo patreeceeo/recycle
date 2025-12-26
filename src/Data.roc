@@ -1,19 +1,19 @@
 module [
     Item,
     Image,
-    available_items
+    available_items,
 ]
 
-Attributes: [
-    PhysicalAttributes {condition: Str, height: Str, width: Str, depth: Str, weight: Str},
-    IntellectualAttributes {}
-    ]
+Attributes : [
+    PhysicalAttributes { condition : Str, height : Str, width : Str, depth : Str, weight : Str },
+    IntellectualAttributes {},
+]
 
-Image: { src: Str, caption: Str }
+Image : { src : Str, caption : Str }
 
-Item: { name: Str, description: Str, images: List Image, attributes: Attributes }
+Item : { name : Str, description : Str, images : List Image, attributes : Attributes }
 
-available_items: List Item
+available_items : List Item
 available_items = [
     {
         name: "Example",
@@ -21,9 +21,9 @@ available_items = [
         images: [
             {
                 src: "/static/me-duck.png",
-                caption: "Front"
-            }
+                caption: "Front",
+            },
         ],
-        attributes: IntellectualAttributes {}
-    }
-    ]
+        attributes: IntellectualAttributes {},
+    },
+]

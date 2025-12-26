@@ -26,7 +26,7 @@ layout = |{ main }|
         ],
     ]
 
-page_index = layout({ main: [ Ul(Data.available_items |> List.map render_item) ] })
+page_index = layout({ main: [Ul(Data.available_items |> List.map render_item)] })
 
 render_item : Data.Item -> Html.Tag
 render_item = |item|
@@ -36,13 +36,14 @@ render_item = |item|
         when List.get(item.images, 0) is
             Ok image ->
                 render_image(image)
+
             Err _ ->
-                P "No images"
-        ]
+                P "No images",
+    ]
 
 render_image : Data.Image -> Html.Tag
-render_image = |{src, caption}|
+render_image = |{ src, caption }|
     Figure [
         Img { src, alt: caption },
-        FigCaption caption
-        ]
+        FigCaption caption,
+    ]

@@ -24,9 +24,9 @@ Tag : [
     H2 Str,
     P Str,
     Text Str,
-    Img { src: Str, alt: Str },
+    Img { src : Str, alt : Str },
     Figure (List Tag),
-    FigCaption Str
+    FigCaption Str,
 ]
 
 render : Tag -> Str
@@ -84,9 +84,7 @@ render = |tag|
             render_generic_simple("link", [("rel", StringAttribute rel), ("href", StringAttribute href)], "")
 
         A { href } content -> render_generic_simple("a", [("href", StringAttribute href)], content)
-
         Text str -> str
-
         Img { src, alt } -> render_generic_simple("img", [("src", StringAttribute src), ("alt", StringAttribute alt)], "")
 
 render_generic : Str, List GenericAttribute, List Tag -> Str
