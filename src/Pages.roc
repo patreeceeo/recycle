@@ -28,7 +28,7 @@ layout = |{ main }|
             Meta { name: "viewport", content: "width=device-width, initial-scale=1" },
             Link { rel: "icon", href: "/static/me-duck.png" },
             Link { rel: "stylesheet", href: "/static/Html.css" },
-            Title "/recycle",
+            Title "recycle bin",
         ],
         Body [
             Nav [
