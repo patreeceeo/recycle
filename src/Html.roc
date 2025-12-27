@@ -15,7 +15,6 @@ Tag : [
     Title Str,
     Body (List Tag),
     Grid (List Tag),
-    Div (List Tag),
     Ul (List Tag),
     Li (List Tag),
     Nav (List Tag),
@@ -28,6 +27,8 @@ Tag : [
     Img { src : Str, alt : Str },
     Figure (List Tag),
     FigCaption Str,
+    Card { href: Str } (List Tag),
+    Article (List Tag)
 ]
 
 render : Tag -> Str
@@ -40,13 +41,13 @@ render = |tag|
             render_generic("head", [], children)
 
         Body children ->
-            render_generic("body", [], children)
+            render_generic("body", [("style", StringAttribute "background-color: cornflowerblue;")], children)
 
         Grid children ->
-            render_generic("div", [("style", StringAttribute "display: grid; grid-auto-columns: fit-content(10rem); grid-auto-rows: 10rem;")], children)
+            render_generic("div", [("style", StringAttribute "display: grid; grid-template-columns: repeat(auto-fill, calc(300px - 0.75rem)); gap: 1rem;")], children)
 
-        Div children ->
-            render_generic("div", [], children)
+        Card {href} children ->
+            render_generic("a", [("href", StringAttribute href), ("style", StringAttribute "display: block; background-color: lightskyblue; padding: 1rem;")], children)
 
         Ul children ->
             render_generic("ul", [], children)
@@ -90,6 +91,8 @@ render = |tag|
         A { href } content -> render_generic_simple("a", [("href", StringAttribute href)], content)
         Text str -> str
         Img { src, alt } -> render_generic_simple("img", [("src", StringAttribute src), ("alt", StringAttribute alt)], "")
+        Article children ->
+            render_generic("article", [("style", StringAttribute "background-color: cornflowerblue;")], children)
 
 render_generic : Str, List GenericAttribute, List Tag -> Str
 render_generic = |tag_name, attributes, children|
@@ -108,6 +111,7 @@ join_tag : Str, Str, Str -> Str
 join_tag = |open, content, close|
     "<${open}>${content}</${close}>"
 
+# Possible bug: When you accidentally provide a tuple with more that 2 elements, instead of giving an compiler error, roc just hangs...
 GenericAttribute : (Str, AttributeValue)
 AttributeValue : [
     BooleanAttribute Bool,

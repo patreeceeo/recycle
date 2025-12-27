@@ -33,7 +33,7 @@ respond! = |req, _|
 
 page_response : Str -> Result Response [ServerErr Str]
 page_response = |path|
-    when Dict.get(Pages.dict, path) is
+    when Dict.get(Pages.routes, path) is
         Ok content ->
             Ok {
                 status: 200,
