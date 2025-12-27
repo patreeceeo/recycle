@@ -33,7 +33,7 @@ layout = |{ main }|
         Body [
             Nav [
                 Ul [
-                    Li [A { href: "/" } "dive back in"],
+                    Li [A { href: "/" } "recycle bin"],
                 ],
             ],
             Main main,
