@@ -2,16 +2,12 @@
 
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 PROJECT_ROOT=$(dirname "$SCRIPT_DIR")
-OUTPUT_DIR="${PROJECT_ROOT}/docs"
-DEV_SERVER_SCRIPT="${SCRIPT_DIR}/dev.sh"
+OUTPUT_DIR="${PROJECT_ROOT}/snapshot"
+PORT=8000
 
 # Clean up background process on exit
 cleanup() {
-  if [ -n "$SERVER_PID" ]; then
-    echo "Stopping dev server..."
-    kill "$SERVER_PID" 2>/dev/null
-    wait "$SERVER_PID" 2>/dev/null
-  fi
+  kill $(lsof -i :$PORT -Fp | sed -E 's/.([0-9]+)/\1/')
 }
 
 trap cleanup EXIT INT TERM
@@ -21,10 +17,16 @@ rm -rf "${OUTPUT_DIR}"
 # Create output directory if it doesn't exist
 mkdir -p "${OUTPUT_DIR}"
 
-# Start dev server in background
-echo "Starting dev server..."
-sh "${DEV_SERVER_SCRIPT}" &
-SERVER_PID=$!
+# Start server in background
+echo "Starting server..."
+
+os_flags() {
+  if [ "$(uname)" = "Linux" ];then
+    echo "--linker legacy"
+  fi
+}
+
+ROC_BASIC_WEBSERVER_PORT=$PORT roc run src/DevServer.roc $(os_flags) &
 
 # Wait for server to be ready
 echo "Waiting for server to start..."
