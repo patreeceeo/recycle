@@ -59,3 +59,4 @@ wget \
   http://localhost:8000/
 
 echo "Snapshot captured to ${OUTPUT_DIR}"
+ls -lR $OUTPUT_DIR
