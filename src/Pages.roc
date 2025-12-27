@@ -44,6 +44,9 @@ page_index = layout(
     {
         main: [
             H1 "Welcome to the Recycle Bin!",
+            P "Everything you see here is free and available. If you want it, let me know. Drop me a line at pscale01 at gmail dot com.",
+            P "Insert here some cliche about the universe giving and taking away.",
+            P "If you want me to mail it to you, I just ask that you cover the shipping costs.",
             Grid(Data.available_items |> Dict.to_list |> List.map render_item),
         ],
     },
