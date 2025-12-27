@@ -26,7 +26,7 @@ os_flags() {
   fi
 }
 
-ROC_BASIC_WEBSERVER_PORT=$PORT BASE_URL="/recycle" roc run src/DevServer.roc $(os_flags) &
+ROC_BASIC_WEBSERVER_PORT=$PORT BASE_URL="https://zzt64.com/recycle/" roc run src/DevServer.roc $(os_flags) &
 
 # Wait for server to be ready
 echo "Waiting for server to start..."
