@@ -64,6 +64,6 @@ wget \
 
 # Remove index.html from links - convert "about/index.html" back to "about/" and "index.html" to just "/"
 find "${OUTPUT_DIR}" -type f -name "*.html" -exec sed -i 's|href="\([^"]*\)/index\.html"|href="\1/"|g' {} \;
-find "${OUTPUT_DIR}" -type f -name "*.html" -exec sed -i 's|href="index\.html"|href="/"|g' {} \;
+find "${OUTPUT_DIR}" -type f -name "*.html" -exec sed -i 's|href="index\.html"|href="/recycle"|g' {} \;
 
 echo "Snapshot captured to ${OUTPUT_DIR}"
