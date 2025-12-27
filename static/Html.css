@@ -89,6 +89,12 @@ img {
   max-width: 100%;
 }
 
+nav ul {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
 .Grid {
   --col-count: 4;
   --gap: 1rem;

@@ -33,7 +33,9 @@ layout = |{ main }|
         Body [
             Nav [
                 Ul [
-                    Li [A { href: "/" } "recycle bin"],
+                    Li [A { href: "https://zzt64.com" } "home"],
+                    Li [ Text "/" ],
+                    Li [A { href: "/" } "recycle"],
                 ],
             ],
             Main main,
