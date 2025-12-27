@@ -36,7 +36,7 @@ respond! = |req, _|
 
 page_response! : Str => Result Response [ServerErr Str]
 page_response! = |path|
-    when Dict.get(Pages.routes({ base_url: Env.var!("BASE_URL") ?? "/" }), path) is
+    when Dict.get(Pages.routes({ base_url: Env.var!("BASE_URL") ?? "/" }), Str.drop_prefix(path, "/")) is
         Ok content ->
             Ok {
                 status: 200,

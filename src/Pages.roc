@@ -9,7 +9,7 @@ routes : { base_url : Str } -> Dict Str Html.Tag
 routes = |{ base_url }|
     Dict.from_list(
         [
-            ("/", page_index({ base_url })),
+            ("", page_index({ base_url })),
         ]
         |> List.concat
             get_details_routes({ base_url }),
