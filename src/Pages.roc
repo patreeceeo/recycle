@@ -47,7 +47,7 @@ page_index = layout(
                 [
                     Article [
                         H1 "Welcome to my Internet Recycle Bin",
-                        P "Everything I \"own\" is actually just borrowed, and some of it wants to own me. I'm letting stuff go so maybe it can help someone else.",
+                        P "Everything I &ldquo;own&rdquo; is actually just borrowed, and in a way, it actually owns me. In that spirit, I'm giving away posessions that don't serve me.",
                         P "Everything you see here is free and available. If you want it, let me know. Drop me a line at pscale01 at gmail dot com.",
                         P "If you want me to mail it to you, I just ask that you cover the shipping costs.",
                     ],
