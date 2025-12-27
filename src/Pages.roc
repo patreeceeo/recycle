@@ -38,7 +38,7 @@ layout = |{ main, base_url }|
                 Ul [
                     Li [A { href: "https://zzt64.com" } "home"],
                     Li [Text "/"],
-                    Li [A { href: base_url } "recycle"],
+                    Li [A { href: "" } "recycle"],
                 ],
             ],
             Main main,
