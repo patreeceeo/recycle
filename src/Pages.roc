@@ -48,8 +48,8 @@ page_index = layout(
                     Article [
                         H1 "Welcome to my Internet Recycle Bin",
                         P "Everything I &ldquo;own&rdquo; is actually just borrowed, and in a way, it actually owns me. In that spirit, I'm giving away posessions that don't serve me.",
-                        P "Everything you see here is free and available. If you want it, let me know. Drop me a line at pscale01 at gmail dot com.",
-                        P "If you want me to mail it to you, I just ask that you cover the shipping costs.",
+                        P "I don't want to deal with craigslist, ebay, fartbook marketplace. Thinking too much about money lowers the vibes. Giving freely, I'm more able to accept freely as well.",
+                        P "That said, if you want me to mail something to you, I might ask that you cover the shipping costs.",
                     ],
                 ]
                 |> List.concat (Data.available_items |> Dict.to_list |> List.map render_item),
