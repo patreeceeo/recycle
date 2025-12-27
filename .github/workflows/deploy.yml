@@ -28,10 +28,9 @@ jobs:
           sudo apt-get install -y wget sed
 
       - name: Install Roc
-        run: |
-          curl -L -o /tmp/roc_install.sh https://github.com/roc-lang/roc/releases/download/nightly/roc_nightly-linux_x86_64-latest.tar.gz.sh
-          sh /tmp/roc_install.sh --prefix /tmp/roc
-          echo "/tmp/roc/bin" >> $GITHUB_PATH
+        uses: hasnep/setup-roc@main
+        with:
+          roc-version: nightly
 
       - name: Capture site
         run: ./scripts/capture.sh
