@@ -44,7 +44,7 @@ render = |tag|
             render_generic("body", [("style", StringAttribute "background-color: cornflowerblue;")], children)
 
         Grid children ->
-            render_generic("div", [("style", StringAttribute "display: grid; grid-template-columns: repeat(auto-fill, calc(300px - 0.75rem)); gap: 1rem;")], children)
+            render_generic("div", [("class", StringAttribute "Grid")], children)
 
         Card { href } children ->
             render_generic("a", [("href", StringAttribute href), ("style", StringAttribute "display: block; text-align: center; background-color: lightskyblue; padding: 1rem;")], children)
