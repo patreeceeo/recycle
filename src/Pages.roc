@@ -48,7 +48,7 @@ page_index = layout(
             Grid(
                 [
                     Article [
-                        H1 "Welcome to my Internet Recycle Bin",
+                        H1 "Welcome to my recycle bin on the web!",
                         P "Everything I &ldquo;own&rdquo; is actually just borrowed, and in a way, it actually owns me. In that spirit, I'm giving away posessions that don't serve me.",
                         P "I don't want to deal with craigslist, ebay, fartbook marketplace. Thinking too much about money lowers the vibes. Giving freely, I'm more able to accept freely as well.",
                         P "That said, if you want me to mail something to you, I might ask that you cover the shipping costs.",
