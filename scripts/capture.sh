@@ -26,7 +26,7 @@ os_flags() {
   fi
 }
 
-ROC_BASIC_WEBSERVER_PORT=$PORT roc run src/DevServer.roc $(os_flags) &
+ROC_BASIC_WEBSERVER_PORT=$PORT BASE_URL="/recycle" roc run src/DevServer.roc $(os_flags) &
 
 # Wait for server to be ready
 echo "Waiting for server to start..."
@@ -45,9 +45,6 @@ if [ $waited -eq $max_wait ]; then
   echo "Error: Server did not start within ${max_wait} seconds"
   exit 1
 fi
-
-# Small delay to ensure server is fully ready
-sleep 2
 
 wget \
   --mirror \

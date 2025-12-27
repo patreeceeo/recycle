@@ -29,6 +29,7 @@ Tag : [
     FigCaption Str,
     Card { href : Str } (List Tag),
     Article (List Tag),
+    BaseUrl Str
 ]
 
 render : Tag -> Str
@@ -93,6 +94,9 @@ render = |tag|
         Img { src, alt } -> render_generic_simple("img", [("src", StringAttribute src), ("alt", StringAttribute alt)], "")
         Article children ->
             render_generic("article", [("style", StringAttribute "background-color: cornflowerblue;")], children)
+
+        BaseUrl url ->
+            render_generic_simple("base", [("href", StringAttribute url)], "")
 
 render_generic : Str, List GenericAttribute, List Tag -> Str
 render_generic = |tag_name, attributes, children|
