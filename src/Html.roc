@@ -27,8 +27,8 @@ Tag : [
     Img { src : Str, alt : Str },
     Figure (List Tag),
     FigCaption Str,
-    Card { href: Str } (List Tag),
-    Article (List Tag)
+    Card { href : Str } (List Tag),
+    Article (List Tag),
 ]
 
 render : Tag -> Str
@@ -46,7 +46,7 @@ render = |tag|
         Grid children ->
             render_generic("div", [("style", StringAttribute "display: grid; grid-template-columns: repeat(auto-fill, calc(300px - 0.75rem)); gap: 1rem;")], children)
 
-        Card {href} children ->
+        Card { href } children ->
             render_generic("a", [("href", StringAttribute href), ("style", StringAttribute "display: block; background-color: lightskyblue; padding: 1rem;")], children)
 
         Ul children ->
