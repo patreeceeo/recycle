@@ -28,8 +28,8 @@ layout = |{ main, base_url }|
         Head [
             MetaCharset "utf-8",
             Meta { name: "viewport", content: "width=device-width, initial-scale=1" },
-            Link { rel: "icon", href: "/static/me-duck.png" },
-            Link { rel: "stylesheet", href: "/static/Html.css" },
+            Link { rel: "icon", href: "static/me-duck.png" },
+            Link { rel: "stylesheet", href: "static/Html.css" },
             Title "recycle bin",
             BaseUrl base_url,
         ],

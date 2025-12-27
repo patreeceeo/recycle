@@ -48,7 +48,6 @@ fi
 
 wget \
   --mirror \
-  --convert-links \
   --page-requisites \
   --no-parent \
   --no-host-directories \
