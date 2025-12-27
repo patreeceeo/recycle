@@ -29,7 +29,7 @@ Tag : [
     FigCaption Str,
     Card { href : Str } (List Tag),
     Article (List Tag),
-    BaseUrl Str
+    BaseUrl Str,
 ]
 
 render : Tag -> Str
