@@ -38,22 +38,16 @@ respond! = |req, _|
         |> split_path_parts
 
     base_path = Env.var!("BASE_URL") ?? "/"
-    base_path_parts = split_path_parts base_path
-    rel_req_path_parts =
-        if List.starts_with(req_path_parts, base_path_parts) then
-            List.drop_first(req_path_parts, List.len(base_path_parts))
-        else
-            req_path_parts
-    dbg rel_req_path_parts
 
-    rel_req_path = Str.join_with(rel_req_path_parts, "/")
+    req_path = Str.join_with(req_path_parts, "/")
+    dbg req_path
 
-    when page_response! rel_req_path base_path is
+    when page_response req_path base_path is
         Ok response -> Ok response
-        Err _ -> file_response! rel_req_path
+        Err _ -> file_response! req_path
 
-page_response! : Str, Str => Result Response [ServerErr Str]
-page_response! = |path, base_url|
+page_response : Str, Str -> Result Response [ServerErr Str]
+page_response = |path, base_url|
     when Dict.get(Pages.routes({ base_url }), path) is
         Ok content ->
             Ok {
