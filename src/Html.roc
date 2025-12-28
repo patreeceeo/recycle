@@ -45,7 +45,7 @@ render = |tag|
             render_generic("head", [], children)
 
         Body children ->
-            render_generic("body", [("style", StringAttribute "background-color: cornflowerblue;")], children)
+            render_generic("body", [], children)
 
         Grid children ->
             render_generic("div", [("class", StringAttribute "Grid")], children)
@@ -99,7 +99,7 @@ render = |tag|
         Text str -> str
         Img { src, alt } -> render_generic_simple("img", [("src", StringAttribute src), ("alt", StringAttribute alt)], "")
         Article children ->
-            render_generic("article", [("style", StringAttribute "background-color: cornflowerblue;")], children)
+            render_generic("article", [], children)
 
         BaseUrl url ->
             render_generic_simple("base", [("href", StringAttribute url)], "")

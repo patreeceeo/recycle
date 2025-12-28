@@ -62,7 +62,7 @@ page_index = |{ base_url }|
                         Article [
                             H1 "/recycle",
                             P "Welcome to my internet recycle bin!",
-                            P "If you see something you want, you can offer me ≥ shipping costs.",
+                            P "If you see something you want, I'll accept ≥ shipping costs in exchange.",
                             P "I'm based out of the San Francisco bay area, use that info for what you will&hellip;",
                             P "You can email me at:",
                             A { href: "mailto:pscale01+recycle@gmail.com?subject=\'RE: Something in your recycle bin'" } "pscale01@gmail.com",
