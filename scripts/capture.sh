@@ -53,20 +53,12 @@ wget \
   --no-parent \
   --no-host-directories \
   --domains=localhost \
-  --cut-dirs=0 \
+  --cut-dirs=1 \
   --directory-prefix="${OUTPUT_DIR}" \
   --quiet \
   --show-progress \
-  http://localhost:8000/
+  http://localhost:8000${BASE_URL}
 
 echo "Snapshot captured to ${OUTPUT_DIR}"
-ls -lR $OUTPUT_DIR
-
-# Move linked local docs
-set -x
-cp -a "${OUTPUT_DIR}${BASE_URL}*" "${OUTPUT_DIR}"
-rm -rf "${OUTPUT_DIR}${BASE_URL}"
-set +x
-
 ls -lR $OUTPUT_DIR
 
