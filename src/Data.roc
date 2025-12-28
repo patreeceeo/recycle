@@ -27,24 +27,12 @@ available_items = Dict.from_list(
                         caption: "Front",
                     },
                     {
-                        src: "static/me-duck.png",
-                        caption: "Front",
+                        src: "static/vrme.png",
+                        caption: "VR",
                     },
                     {
-                        src: "static/me-duck.png",
-                        caption: "Front",
-                    },
-                    {
-                        src: "static/me-duck.png",
-                        caption: "Front",
-                    },
-                    {
-                        src: "static/me-duck.png",
-                        caption: "Front",
-                    },
-                    {
-                        src: "static/me-duck.png",
-                        caption: "Front",
+                        src: "static/snoopy.jpg",
+                        caption: "cat",
                     },
                 ],
                 attributes: IntellectualAttributes {},

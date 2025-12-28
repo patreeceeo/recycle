@@ -115,3 +115,28 @@ nav ul {
   }
 }
 
+.Card {
+  --show-figure-index: 1;
+  display: block;
+  text-align: center;
+  background-color: lightskyblue;
+  padding: 1rem;
+
+  figure {
+    display: none;
+  }
+
+  &:hover {
+    figure:nth-child(1 of figure) {
+      display: none;
+    }
+    figure.show {
+      display: block !important;
+    }
+  }
+  &:not(hover) {
+    figure:nth-child(1 of figure) {
+      display: block;
+    }
+  }
+}

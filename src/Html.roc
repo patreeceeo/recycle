@@ -30,6 +30,7 @@ Tag : [
     Card { href : Str } (List Tag),
     Article (List Tag),
     BaseUrl Str,
+    Script {src: Str}
 ]
 
 render : Tag -> Str
@@ -48,7 +49,7 @@ render = |tag|
             render_generic("div", [("class", StringAttribute "Grid")], children)
 
         Card { href } children ->
-            render_generic("a", [("href", StringAttribute href), ("style", StringAttribute "display: block; text-align: center; background-color: lightskyblue; padding: 1rem;")], children)
+            render_generic("a", [("href", StringAttribute href), ("class", StringAttribute "Card")], children)
 
         Ul children ->
             render_generic("ul", [], children)
@@ -97,6 +98,9 @@ render = |tag|
 
         BaseUrl url ->
             render_generic_simple("base", [("href", StringAttribute url)], "")
+
+        Script {src} ->
+            render_generic_simple("script", [("src", StringAttribute src)], "")
 
 render_generic : Str, List GenericAttribute, List Tag -> Str
 render_generic = |tag_name, attributes, children|
