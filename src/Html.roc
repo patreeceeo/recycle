@@ -32,7 +32,7 @@ Tag : [
     BaseUrl Str,
     Script { src : Str },
     FigureRotator (List Tag),
-    Footer (List Tag)
+    Footer (List Tag),
 ]
 
 render : Tag -> Str
