@@ -44,7 +44,6 @@ respond! = |req, _|
             List.drop_first(req_path_parts, List.len(base_path_parts))
         else
             req_path_parts
-    dbg rel_req_path_parts
 
     rel_req_path = Str.join_with(rel_req_path_parts, "/")
 
