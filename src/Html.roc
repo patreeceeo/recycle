@@ -30,7 +30,7 @@ Tag : [
     Card { href : Str } (List Tag),
     Article (List Tag),
     BaseUrl Str,
-    Script {src: Str}
+    Script { src : Str },
 ]
 
 render : Tag -> Str
@@ -99,7 +99,7 @@ render = |tag|
         BaseUrl url ->
             render_generic_simple("base", [("href", StringAttribute url)], "")
 
-        Script {src} ->
+        Script { src } ->
             render_generic_simple("script", [("src", StringAttribute src)], "")
 
 render_generic : Str, List GenericAttribute, List Tag -> Str
