@@ -67,7 +67,7 @@ page_index = |{ base_url }|
                             P "You can email me at:",
                             A { href: "mailto:pscale01+recycle@gmail.com?subject=\'RE: Something in your recycle bin'" } "pscale01@gmail.com",
                             P "Please steal this idea:",
-                            A { href: "https://taylor.town/junk-guide" } "DIY junk page how-to"
+                            A { href: "https://taylor.town/junk-guide" } "DIY junk page how-to",
                         ],
                     ]
                     |> List.concat (Data.available_items |> Dict.to_list |> List.map render_item),
