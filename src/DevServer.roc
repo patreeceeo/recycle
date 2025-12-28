@@ -18,6 +18,11 @@ Model : {}
 
 init! = |{}| Ok {}
 
+split_path_parts: Str -> List Str
+split_path_parts = |path|
+    path |> Str.split_on("/")
+    |> List.drop_if |part| Str.is_empty(part)
+
 respond! : Request, Model => Result Response [ServerErr Str]_
 respond! = |req, _|
     # Log request datetime, method and url
@@ -25,18 +30,30 @@ respond! = |req, _|
 
     try Stdout.line! "${datetime} ${Inspect.to_str req.method} ${req.uri}"
 
-    req_path =
+    req_path_parts =
         req.uri
         |> Url.from_str
         |> Url.path
+        |> split_path_parts
 
-    when page_response! req_path is
+    base_path = Env.var!("BASE_URL") ?? "/"
+    base_path_parts = split_path_parts base_path
+    rel_req_path_parts =
+        if List.starts_with(req_path_parts, base_path_parts) then
+            List.drop_first(req_path_parts, List.len(base_path_parts))
+        else
+            req_path_parts
+    dbg rel_req_path_parts
+
+    rel_req_path = Str.join_with(rel_req_path_parts, "/")
+
+    when page_response! rel_req_path base_path is
         Ok response -> Ok response
-        Err _ -> file_response! req_path
+        Err _ -> file_response! rel_req_path
 
-page_response! : Str => Result Response [ServerErr Str]
-page_response! = |path|
-    when Dict.get(Pages.routes({ base_url: Env.var!("BASE_URL") ?? "/" }), Str.drop_prefix(path, "/")) is
+page_response! : Str, Str => Result Response [ServerErr Str]
+page_response! = |path, base_url|
+    when Dict.get(Pages.routes({ base_url }), path) is
         Ok content ->
             Ok {
                 status: 200,
