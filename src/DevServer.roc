@@ -18,9 +18,10 @@ Model : {}
 
 init! = |{}| Ok {}
 
-split_path_parts: Str -> List Str
+split_path_parts : Str -> List Str
 split_path_parts = |path|
-    path |> Str.split_on("/")
+    path
+    |> Str.split_on("/")
     |> List.drop_if |part| Str.is_empty(part)
 
 respond! : Request, Model => Result Response [ServerErr Str]_
