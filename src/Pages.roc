@@ -60,11 +60,12 @@ page_index = |{ base_url }|
                 Grid(
                     [
                         Article [
-                            H1 "Patrick's Internet Recycle Bin",
-                            P "Everything I &ldquo;own&rdquo; is actually just borrowed, and if I'm not careful, it'll end up owning me.",
-                            P "I don't want to deal with craigslist, ebay, fartbook marketplace. Thinking too much about money lowers the vibes. A lot of things are more important than material goods. Send me an email at p s c a l e 0 1 at g m a i l dot com if you see something you want.",
-                            P "That said, if you want me to mail something to you, I might ask that you cover the shipping costs.",
-                            P "Alternatively, I'm in the San Francisco Bay area most of the time. Use that info for what you will.",
+                            H1 "/recycle",
+                            P "Welcome to my internet recycle bin!",
+                            P "If you see something you want, you can offer me ≥ shipping costs.",
+                            P "I'm based out of the San Francisco bay area, use that info for what you will&hellip;",
+                            P "You can email me at:",
+                            A {href: "mailto:pscale01+recycle@gmail.com?subject=\'RE: Something in your recycle bin'"} "pscale01@gmail.com"
                         ],
                     ]
                     |> List.concat (Data.available_items |> Dict.to_list |> List.map render_item),
