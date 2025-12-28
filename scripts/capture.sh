@@ -59,12 +59,14 @@ wget \
   --show-progress \
   http://localhost:8000/
 
+echo "Snapshot captured to ${OUTPUT_DIR}"
+ls -lR $OUTPUT_DIR
+
 # Move linked local docs
 set -x
 cp -a "${OUTPUT_DIR}${BASE_URL}*" "${OUTPUT_DIR}"
 rm -rf "${OUTPUT_DIR}${BASE_URL}"
 set +x
 
-echo "Snapshot captured to ${OUTPUT_DIR}"
 ls -lR $OUTPUT_DIR
 
