@@ -31,7 +31,7 @@ Tag : [
     Article (List Tag),
     BaseUrl Str,
     Script { src : Str },
-    FigureRotator (List Tag)
+    FigureRotator (List Tag),
 ]
 
 render : Tag -> Str
