@@ -7,7 +7,7 @@ PORT=8000
 
 # Clean up background process on exit
 cleanup() {
-  kill $(lsof -i :$PORT -Fp | sed -E 's/.([0-9]+)/\1/')
+  kill -9 $(lsof -i :$PORT -Fp | sed -E 's/.([0-9]+)/\1/')
 }
 
 trap cleanup EXIT INT TERM
@@ -60,3 +60,5 @@ wget \
 
 echo "Snapshot captured to ${OUTPUT_DIR}"
 ls -lR $OUTPUT_DIR
+
+cleanup
