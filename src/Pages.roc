@@ -62,7 +62,7 @@ page_index = |{ base_url }|
                         Article [
                             H1 "Patrick's Internet Recycle Bin",
                             P "Everything I &ldquo;own&rdquo; is actually just borrowed, and in a way, it actually owns me. In that spirit, I'm giving away posessions that don't serve me.",
-                            P "I don't want to deal with craigslist, ebay, fartbook marketplace. Thinking too much about money lowers the vibes. Kindness &gt; Wealth.",
+                            P "I don't want to deal with craigslist, ebay, fartbook marketplace. Thinking too much about money lowers the vibes. A lot of things are more important than material goods.",
                             P "That said, if you want me to mail something to you, I might ask that you cover the shipping costs.",
                             P "Alternatively, I'm in the San Francisco Bay area most of the time. Use that info for what you will.",
                         ],
