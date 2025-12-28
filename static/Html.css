@@ -97,22 +97,12 @@ nav ul {
 }
 
 .Grid {
-  --col-count: 4;
-  --gap: 1rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, calc(100%/var(--col-count) - var(--gap) * (var(--col-count) - 1) / var(--col-count)));
-  gap: var(--gap);
-}
-@media (max-width: 900px) {
-  .Grid {
-    --col-count: 2;
-    --gap: 1rem;
-  }
-}
-@media (max-width: 450px) {
-  .Grid {
-    --col-count: 1;
-    --gap: 1rem;
+  columns: auto 18rem;
+  column-gap: 0;
+
+  & > * {
+    break-inside: avoid;
+    margin: 1rem 0.5rem;
   }
 }
 
@@ -123,6 +113,7 @@ nav ul {
   text-align: center;
   background-color: lightskyblue;
   padding: 1rem;
+  margin: 0;
 }
 
 .FigureRotator {
