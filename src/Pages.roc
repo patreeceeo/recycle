@@ -65,7 +65,7 @@ page_index = |{ base_url }|
                             P "If you see something you want, you can offer me ≥ shipping costs.",
                             P "I'm based out of the San Francisco bay area, use that info for what you will&hellip;",
                             P "You can email me at:",
-                            A {href: "mailto:pscale01+recycle@gmail.com?subject=\'RE: Something in your recycle bin'"} "pscale01@gmail.com"
+                            A { href: "mailto:pscale01+recycle@gmail.com?subject=\'RE: Something in your recycle bin'" } "pscale01@gmail.com",
                         ],
                     ]
                     |> List.concat (Data.available_items |> Dict.to_list |> List.map render_item),
