@@ -115,8 +115,9 @@ nav ul {
   }
 }
 
-.Card {
-  --show-figure-index: 1;
+.Card,
+.Card:visited,
+.Card:active {
   display: block;
   text-align: center;
   background-color: lightskyblue;
