@@ -4,6 +4,7 @@ SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 PROJECT_ROOT=$(dirname "$SCRIPT_DIR")
 OUTPUT_DIR="${PROJECT_ROOT}/snapshot"
 PORT=8000
+BASE_URL="/recycle/"
 
 # Clean up background process on exit
 cleanup() {
@@ -26,7 +27,7 @@ os_flags() {
   fi
 }
 
-ROC_BASIC_WEBSERVER_PORT=$PORT BASE_URL="/recycle/" roc run src/DevServer.roc $(os_flags) &
+ROC_BASIC_WEBSERVER_PORT=$PORT BASE_URL="${BASE_URL}" roc run src/DevServer.roc $(os_flags) &
 
 # Wait for server to be ready
 echo "Waiting for server to start..."
@@ -58,7 +59,12 @@ wget \
   --show-progress \
   http://localhost:8000/
 
+# Move linked local docs
+set -x
+cp -a "${OUTPUT_DIR}${BASE_URL}*" "${OUTPUT_DIR}"
+rm -rf "${OUTPUT_DIR}${BASE_URL}"
+set +x
+
 echo "Snapshot captured to ${OUTPUT_DIR}"
 ls -lR $OUTPUT_DIR
 
-cleanup
