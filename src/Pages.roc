@@ -43,6 +43,12 @@ layout = |{ main, base_url }|
                 ],
             ],
             Main main,
+            Footer [
+                Text "Made",
+                A {href: "https://www.todepond.com/wikiblogarden/tadi-web/entry-points/#slippy-mindset"} "slippily",
+                Text "with",
+                A {href: "https://github.com/patreeceeo/recycle"} "roc and wget"
+            ]
         ],
     ]
 
@@ -54,7 +60,7 @@ page_index = |{ base_url }|
                 Grid(
                     [
                         Article [
-                            H1 "Welcome to my Internet Recycle Bin",
+                            H1 "Patrick's Internet Recycle Bin",
                             P "Everything I &ldquo;own&rdquo; is actually just borrowed, and in a way, it actually owns me. In that spirit, I'm giving away posessions that don't serve me.",
                             P "I don't want to deal with craigslist, ebay, fartbook marketplace. Thinking too much about money lowers the vibes. Kindness &gt; Wealth.",
                             P "That said, if you want me to mail something to you, I might ask that you cover the shipping costs.",

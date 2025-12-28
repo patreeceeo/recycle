@@ -32,6 +32,7 @@ Tag : [
     BaseUrl Str,
     Script { src : Str },
     FigureRotator (List Tag),
+    Footer (List Tag)
 ]
 
 render : Tag -> Str
@@ -63,6 +64,9 @@ render = |tag|
 
         Main children ->
             render_generic("main", [], children)
+
+        Footer children ->
+            render_generic("footer", [], children)
 
         Figure children ->
             render_generic("figure", [("style", StringAttribute "text-align: center")], children)
