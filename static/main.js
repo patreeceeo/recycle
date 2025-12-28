@@ -27,9 +27,9 @@ requestAnimationFrame(loop)
 
 
 addEventListener("DOMContentLoaded", () => {
-  const figures = document.querySelectorAll("figure")
-  for(const fig of figures) {
-    figureParents.add(fig.parentElement);
+  const figureRotators = document.querySelectorAll(".FigureRotator")
+  for(const el of figureRotators) {
+    figureParents.add(el);
   }
 
 });

@@ -31,6 +31,7 @@ Tag : [
     Article (List Tag),
     BaseUrl Str,
     Script { src : Str },
+    FigureRotator (List Tag)
 ]
 
 render : Tag -> Str
@@ -101,6 +102,9 @@ render = |tag|
 
         Script { src } ->
             render_generic_simple("script", [("src", StringAttribute src)], "")
+
+        FigureRotator children ->
+            render_generic("div", [("class", StringAttribute "FigureRotator")], children)
 
 render_generic : Str, List GenericAttribute, List Tag -> Str
 render_generic = |tag_name, attributes, children|

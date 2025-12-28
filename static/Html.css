@@ -121,7 +121,9 @@ nav ul {
   text-align: center;
   background-color: lightskyblue;
   padding: 1rem;
+}
 
+.FigureRotator {
   figure {
     display: none;
   }

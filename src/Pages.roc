@@ -88,7 +88,7 @@ page_item_detail = |{ item, base_url }|
 
 render_item : (Str, Data.Item) -> Html.Tag
 render_item = |(href, item)|
-    Card { href } ([H2 item.name] |> List.concat render_image_list(item.images))
+    FigureRotator [Card { href } ([H2 item.name] |> List.concat render_image_list(item.images))]
 
 render_image_list : List Data.Image -> List Html.Tag
 render_image_list = |images|
