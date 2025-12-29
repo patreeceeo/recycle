@@ -60,8 +60,8 @@ page_index = |{ base_url }|
                 Grid(
                     [
                         Article [
-                            H1 "/recycle",
-                            P "Welcome to my internet recycle bin!",
+                            H1 "Patrick's /recycle bin",
+                            P "Welcome, and happy browsing!",
                             P "If you see something you want, I'll accept ≥ shipping costs in exchange.",
                             P "I'm based out of the San Francisco bay area, use that info for what you will&hellip;",
                             P "You can email me at:",
