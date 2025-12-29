@@ -88,7 +88,7 @@ page_item_detail = |{ item, base_url }|
                             Article [
                                 H1 item.name,
                                 P item.description,
-                                P "posted ${item.date_posted}"
+                                P "posted ${item.date_posted}",
                             ],
                         ]
                         |> List.concat(item.images |> List.map render_image)
