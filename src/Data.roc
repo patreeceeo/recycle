@@ -12,7 +12,7 @@ available_items : Dict Str Item
 available_items = Dict.from_list(
     [
         (
-            "WineFridge.html",
+            "WineFridge",
             {
                 date_posted: "Jan 3, 2026",
                 name: "Wine Fridge",

@@ -27,11 +27,11 @@ layout = |{ main, base_url }|
     Root [
         Head [
             MetaCharset "utf-8",
+            BaseUrl base_url,
             Meta { name: "viewport", content: "width=device-width, initial-scale=1" },
             Link { rel: "icon", href: "static/me-duck.png" },
             Link { rel: "stylesheet", href: "static/Html.css" },
             Title "recycle bin",
-            BaseUrl base_url,
             Script { src: "static/main.js" },
         ],
         Body [
