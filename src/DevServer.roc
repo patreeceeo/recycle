@@ -58,7 +58,7 @@ page_response = |path, base_url|
             Ok {
                 status: 200,
                 headers: [
-                    {name: "Content-Type", value: "text/html; charset=utf-8"}
+                    { name: "Content-Type", value: "text/html; charset=utf-8" },
                 ],
                 body: Html.render(content) |> Str.to_utf8,
             }
