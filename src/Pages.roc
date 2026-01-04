@@ -60,7 +60,7 @@ page_index = |{ base_url }|
                 Grid(
                     [
                         Article [
-                            H1 "Patrick's /recycle bin",
+                            H1 "Patrick's recycle bin",
                             P "Welcome, and happy browsing!",
                             P "If you see something you want, I'll accept ≥ shipping costs in exchange.",
                             P "I'm based out of the San Francisco bay area, use that info for what you will&hellip;",
@@ -126,5 +126,5 @@ render_image_with_link : Data.Image -> Html.Tag
 render_image_with_link = |{ src, caption }|
     Figure [
         FigCaption caption,
-        A {href: src} [Img { src, alt: caption }],
+        A { href: src } [Img { src, alt: caption }],
     ]
