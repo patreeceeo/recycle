@@ -118,7 +118,7 @@ render_image_list = |images|
 render_image : Data.Image -> Html.Tag
 render_image = |{ src, caption }|
     Figure [
-        Img { src, alt: caption },
         FigCaption caption,
+        Img { src, alt: caption },
     ]
 
