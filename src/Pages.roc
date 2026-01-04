@@ -22,8 +22,8 @@ get_details_routes = |{ base_url }|
     |> List.map |(href, item)|
         (href, page_item_detail { item, base_url })
 
-layout : { main : List Html.Tag, base_url : Str } -> Html.Tag
-layout = |{ main, base_url }|
+layout : { main : List Html.Tag, base_url : Str, page_title : Str } -> Html.Tag
+layout = |{ main, base_url, page_title }|
     Root [
         Head [
             MetaCharset "utf-8",
@@ -32,7 +32,7 @@ layout = |{ main, base_url }|
             Meta { name: "description", content: "Amid the fragmentation and enshittification of well-known online platforms, a simple website with the purpose of finding loving new owners of stuff I no longer need." },
             Link { rel: "icon", href: "static/me-duck.png" },
             Link { rel: "stylesheet", href: "static/Html.css" },
-            Title "recycle bin",
+            Title (if Str.is_empty(page_title) then "recycle bin" else "${page_title} | recycle bin"),
             Script { src: "static/main.js", async: Bool.false },
             Script { src: "https://scripts.simpleanalyticscdn.com/latest.js", async: Bool.true },
         ],
@@ -56,6 +56,7 @@ page_index = |{ base_url }|
     layout(
         {
             base_url,
+            page_title: "",
             main: [
                 Grid(
                     [
@@ -81,6 +82,7 @@ page_item_detail = |{ item, base_url }|
     layout(
         {
             base_url,
+            page_title: item.name,
             main: [
                 Grid
                     (
