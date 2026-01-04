@@ -45,10 +45,8 @@ layout = |{ main, base_url }|
             ],
             Main main,
             Footer [
-                Text "Made",
-                A { href: "https://www.todepond.com/wikiblogarden/tadi-web/entry-points/#slippy-mindset" } [Text "slippily"],
-                Text "with",
-                A { href: "https://github.com/patreeceeo/recycle" } [Text "roc and wget"],
+                Text "Everything under /recycle on this webiste is public domain. Stayin'",
+                A { href: "https://www.todepond.com/wikiblogarden/tadi-web/entry-points/#slippy-mindset" } [Text "slippy."],
             ],
         ],
     ]
