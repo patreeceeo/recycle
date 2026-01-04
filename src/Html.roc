@@ -18,7 +18,7 @@ Tag : [
     Ul (List Tag),
     Li (List Tag),
     Nav (List Tag),
-    A { href : Str } Str,
+    A { href : Str } (List Tag),
     Main (List Tag),
     H1 Str,
     H2 Str,
@@ -95,7 +95,7 @@ render = |tag|
         Link { rel, href } ->
             render_generic_simple("link", [("rel", StringAttribute rel), ("href", StringAttribute href)], "")
 
-        A { href } content -> render_generic_simple("a", [("href", StringAttribute href)], content)
+        A { href } content -> render_generic("a", [("href", StringAttribute href)], content)
         Text str -> str
         Img { src, alt } -> render_generic_simple("img", [("src", StringAttribute src), ("alt", StringAttribute alt)], "")
         Article children ->

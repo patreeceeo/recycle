@@ -37,17 +37,17 @@ layout = |{ main, base_url }|
         Body [
             Nav [
                 Ul [
-                    Li [A { href: "https://zzt64.com" } "home"],
+                    Li [A { href: "https://zzt64.com" } [Text "home"]],
                     Li [Text "/"],
-                    Li [A { href: "" } "recycle"],
+                    Li [A { href: "" } [Text "recycle"]],
                 ],
             ],
             Main main,
             Footer [
                 Text "Made",
-                A { href: "https://www.todepond.com/wikiblogarden/tadi-web/entry-points/#slippy-mindset" } "slippily",
+                A { href: "https://www.todepond.com/wikiblogarden/tadi-web/entry-points/#slippy-mindset" } [Text "slippily"],
                 Text "with",
-                A { href: "https://github.com/patreeceeo/recycle" } "roc and wget",
+                A { href: "https://github.com/patreeceeo/recycle" } [Text "roc and wget"],
             ],
         ],
     ]
@@ -65,9 +65,9 @@ page_index = |{ base_url }|
                             P "If you see something you want, I'll accept ≥ shipping costs in exchange.",
                             P "I'm based out of the San Francisco bay area, use that info for what you will&hellip;",
                             P "You can email me at:",
-                            A { href: "mailto:pscale01+recycle@gmail.com?subject=\'RE: Something in your recycle bin'" } "pscale01@gmail.com",
+                            A { href: "mailto:pscale01+recycle@gmail.com?subject=\'RE: Something in your recycle bin'" } [Text "pscale01@gmail.com"],
                             P "Got junk?",
-                            A { href: "https://taylor.town/junk-guide" } "Put it online where it belongs!",
+                            A { href: "https://taylor.town/junk-guide" } [Text "Put it online where it belongs!"],
                         ],
                     ]
                     |> List.concat (Data.available_items |> Dict.to_list |> List.map render_item),
@@ -91,7 +91,7 @@ page_item_detail = |{ item, base_url }|
                                 P "posted ${item.date_posted}",
                             ],
                         ]
-                        |> List.concat(item.images |> List.map render_image)
+                        |> List.concat(item.images |> List.map render_image_with_link)
                     ),
             ],
         },
@@ -122,3 +122,9 @@ render_image = |{ src, caption }|
         Img { src, alt: caption },
     ]
 
+render_image_with_link : Data.Image -> Html.Tag
+render_image_with_link = |{ src, caption }|
+    Figure [
+        FigCaption caption,
+        A {href: src} [Img { src, alt: caption }],
+    ]
