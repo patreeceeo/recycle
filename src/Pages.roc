@@ -29,6 +29,7 @@ layout = |{ main, base_url }|
             MetaCharset "utf-8",
             BaseUrl base_url,
             Meta { name: "viewport", content: "width=device-width, initial-scale=1" },
+            Meta { name: "description", content: "Amid the fragmentation and enshittification of well-known online platforms, a simple website with the purpose of finding loving new owners of stuff I no longer need." },
             Link { rel: "icon", href: "static/me-duck.png" },
             Link { rel: "stylesheet", href: "static/Html.css" },
             Title "recycle bin",
