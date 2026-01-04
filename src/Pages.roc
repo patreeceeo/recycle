@@ -32,7 +32,8 @@ layout = |{ main, base_url }|
             Link { rel: "icon", href: "static/me-duck.png" },
             Link { rel: "stylesheet", href: "static/Html.css" },
             Title "recycle bin",
-            Script { src: "static/main.js" },
+            Script { src: "static/main.js", async: Bool.false },
+            Script { src: "https://scripts.simpleanalyticscdn.com/latest.js", async: Bool.true },
         ],
         Body [
             Nav [
