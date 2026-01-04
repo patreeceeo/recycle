@@ -30,7 +30,7 @@ Tag : [
     Card { href : Str } (List Tag),
     Article (List Tag),
     BaseUrl Str,
-    Script { src : Str, async ?? Bool } ,
+    Script { src : Str, async ?? Bool },
     FigureRotator (List Tag),
     Footer (List Tag),
 ]
@@ -104,7 +104,7 @@ render = |tag|
         BaseUrl url ->
             render_generic_simple("base", [("href", StringAttribute url)], "")
 
-        Script { src, async ? Bool.false } ->
+        Script { src, async ?? Bool.false } ->
             render_generic_simple("script", [("src", StringAttribute src), ("async", BooleanAttribute async)], "")
 
         FigureRotator children ->
