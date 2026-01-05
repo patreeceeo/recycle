@@ -16,7 +16,7 @@ available_items = Dict.from_list(
             {
                 date_posted: "Jan 3, 2026",
                 name: "Wine Fridge",
-                description: "Keep your bevvies cool with this sleek wine fridge! Featuring adjustable shelves and a compact design, it's perfect for any home bar or kitchen. Make: Summit. Model: SCR600BGLBIADA. Condition: Like New. See photos for more details.",
+                description: "UPDATE: No longer available! Keep your bevvies cool with this sleek wine fridge! Featuring adjustable shelves and a compact design, it's perfect for any home bar or kitchen. Make: Summit. Model: SCR600BGLBIADA. Condition: Like New. See photos for more details.",
                 images: [
                     {
                         src: "static/wine-fridge2.webp",
