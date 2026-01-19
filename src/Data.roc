@@ -12,23 +12,31 @@ available_items : Dict Str Item
 available_items = Dict.from_list(
     [
         (
-            "WineFridge.html",
+            "SamsungFlatscreenTV.html",
             {
-                date_posted: "Jan 3, 2026",
-                name: "Wine Fridge",
-                description: "UPDATE: No longer available! Keep your bevvies cool with this sleek wine fridge! Featuring adjustable shelves and a compact design, it's perfect for any home bar or kitchen. Make: Summit. Model: SCR600BGLBIADA. Condition: Like New. See photos for more details.",
+                date_posted: "Jan 18, 2026",
+                name: "Samsung Flatscreen TV",
+                description: "A wall-mountable 40-inch Samsung flatscreen TV in good condition. Can of La Croix for scale. Cables, remote control and anything not pictured is not included&hellip; We can throw in the can of La Croix, if you want.",
                 images: [
                     {
-                        src: "static/wine-fridge2.webp",
-                        caption: "Front Left",
+                        src: "static/IMG_4992.jpg",
+                        caption: "It works!",
                     },
                     {
-                        src: "static/wine-fridge1.webp",
-                        caption: "Front Right",
+                        src: "static/IMG_4993.jpg",
+                        caption: "Back panel ports",
                     },
                     {
-                        src: "static/wine-fridge3.webp",
-                        caption: "Specs + Features",
+                        src: "static/IMG_4994.jpg",
+                        caption: "Closer look at ports and info sticker",
+                    },
+                    {
+                        src: "static/IMG_4996.jpg",
+                        caption: "More ports",
+                    },
+                    {
+                        src: "static/IMG_4997.jpg",
+                        caption: "The power input",
                     },
                 ],
             },
