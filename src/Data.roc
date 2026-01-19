@@ -16,7 +16,7 @@ available_items = Dict.from_list(
             {
                 date_posted: "Jan 18, 2026",
                 name: "Samsung Flatscreen TV",
-                description: "A wall-mountable 40-inch Samsung flatscreen TV in good condition. Can of La Croix for scale. Cables, remote control and anything not pictured is not included&hellip; We can throw in the can of La Croix, if you want.",
+                description: "A wall-mountable 40-inch Samsung flatscreen TV in good condition. Can of La Croix for scale. Cables, remote control and anything not pictured is not included&hellip; We can throw in the can of La Croix, if you want. Price? Just get it out of our house!",
                 images: [
                     {
                         src: "static/IMG_4992.jpg",
